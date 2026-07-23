@@ -77,6 +77,7 @@ export default function AdminDashboard({ onSettingsUpdated, onResumeUpdated }) {
   const [mediaFile, setMediaFile] = useState(null);
   const [mediaFolder, setMediaFolder] = useState('general');
   const [uploading, setUploading] = useState(false);
+  const [uploadingField, setUploadingField] = useState(null);
   const [copiedId, setCopiedId] = useState('');
 
   // Messages Inbox state
