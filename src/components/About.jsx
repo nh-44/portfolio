@@ -3,8 +3,8 @@ import { motion } from 'framer-motion';
 import { User, CheckCircle2 } from 'lucide-react';
 
 export default function About({ settings }) {
-  const bio = settings?.about_text || "I'm a passionate Software Engineer and final year Computer Science student at PES University, Bangalore, India.";
-  const location = settings?.location || "Bangalore, India";
+  const bio = settings?.about_text || "Software Engineer-in-Training with experience in backend systems, document intelligence, applied machine learning, and GenAI tooling. Proven ability to build data processing pipelines involving PDF parsing, semantic similarity, and LLM-based reasoning.";
+  const location = settings?.location || "Bengaluru, India";
 
   // Extract quick facts
   const quickFacts = settings?.quick_facts || ["Final Year CS Student at PES University", "AI & ML", "Automotives", "Coding"];

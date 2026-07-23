@@ -24,9 +24,7 @@ const InstagramIcon = ({ className = "w-4 h-4" }) => (
 
 const defaultRoles = [
   "Software Engineer",
-  "Full Stack Developer",
-  "AI & Automation Architect",
-  "Robotics Engineer"
+  "AI & ML Engineer"
 ];
 
 export default function Hero({ settings, onOpenTerminal }) {
@@ -35,9 +33,9 @@ export default function Hero({ settings, onOpenTerminal }) {
   const [isDeleting, setIsDeleting] = useState(false);
 
   // Extract variables
-  const name = settings?.hero_heading || 'Naveen';
-  const tagline = settings?.hero_description || 'Building high-performance software, intelligent systems & robotic automations.';
-  const aboutPreview = settings?.about_text || 'Final year Computer Science student specializing in AI, full stack systems, and robotics.';
+  const name = settings?.hero_heading || 'Naveen S';
+  const tagline = settings?.hero_description || 'Software Engineer-in-Training specializing in backend systems, document intelligence, applied machine learning, and GenAI tooling.';
+  const aboutPreview = settings?.about_text || 'Software Engineer-in-Training with experience in backend systems, document intelligence, applied machine learning, and GenAI tooling. Proven ability to build data processing pipelines involving PDF parsing, semantic similarity, and LLM-based reasoning.';
   const profilePic = settings?.profile_picture_url || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&h=400&q=80';
   const socials = settings?.social_links || {};
 
@@ -77,7 +75,7 @@ export default function Hero({ settings, onOpenTerminal }) {
 
       <div className="relative z-10 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
+
           {/* Left Column: Bio & Text Details */}
           <div className="lg:col-span-7 flex flex-col justify-center">
             {/* Status Badge */}
@@ -229,19 +227,19 @@ export default function Hero({ settings, onOpenTerminal }) {
             transition={{ duration: 0.5, delay: 0.15 }}
             className="lg:col-span-5 flex justify-center lg:justify-end"
           >
-            <motion.div 
+            <motion.div
               whileHover={{ rotate: 1.5, scale: 1.02 }}
               transition={{ type: 'spring', stiffness: 350, damping: 18 }}
               className="relative group w-64 h-64 sm:w-80 sm:h-80 select-none cursor-pointer"
             >
               {/* Outer glowing ring background */}
               <div className="absolute -inset-1 rounded-[2.5rem] bg-gradient-to-r from-accent to-accent/40 opacity-20 blur-xl group-hover:opacity-35 transition-opacity duration-500" />
-              
+
               {/* Inner frame wrapper */}
               <div className="w-full h-full rounded-[2rem] bg-slate-950 p-2.5 border border-white/10 overflow-hidden shadow-2xl relative">
                 {/* Overlay film filter */}
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-40 z-10" />
-                
+
                 {/* Image */}
                 <img
                   src={profilePic}
@@ -249,7 +247,7 @@ export default function Hero({ settings, onOpenTerminal }) {
                   className="w-full h-full object-cover rounded-[1.5rem] grayscale hover:grayscale-0 transition-all duration-700"
                 />
               </div>
-              
+
               {/* Technical label overlay */}
               <div className="absolute bottom-4 right-4 bg-slate-950/90 border border-white/10 px-3 py-1 rounded-xl text-[9px] font-mono text-slate-400 flex items-center gap-1 z-20 backdrop-blur">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />

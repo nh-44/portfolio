@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Code2, Server, Cpu, FileCode, Palette, Sparkles, Box, Layers, 
-  Terminal, Database, Network, Zap, Container, Brain, Cloud, 
-  CloudSun, GitBranch, ShieldCheck 
+import {
+  Code2, Server, Cpu, FileCode, Palette, Sparkles, Box, Layers,
+  Terminal, Database, Network, Zap, Container, Brain, Cloud,
+  CloudSun, GitBranch, ShieldCheck
 } from 'lucide-react';
 import { api } from '../utils/api';
 
@@ -59,7 +59,7 @@ export default function Skills() {
             <span>TECH STACK & CAPABILITIES</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-            Tools & technologies I <span className="text-gradient">work with daily</span>
+            Tools <span className="text-gradient">& technologies</span>
           </h2>
         </div>
 
@@ -72,11 +72,10 @@ export default function Skills() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setActiveCategory(idx)}
-                className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap ${
-                  activeIdx === idx
+                className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap ${activeIdx === idx
                     ? 'bg-accent text-slate-950 font-bold shadow-lg shadow-accent/20'
                     : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
-                }`}
+                  }`}
               >
                 {cat.category}
               </motion.button>

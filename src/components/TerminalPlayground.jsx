@@ -10,7 +10,7 @@ export default function TerminalPlayground({ isOpen, onClose, settings }) {
   const [history, setHistory] = useState([
     {
       type: 'system',
-      text: 'Naveen HQ Console Shell v2.4 [x86_64-pc-linux-gnu]\nType "help" to view available terminal commands.'
+      text: 'Console Shell v6.9 \nType "help" to view available terminal commands.'
     }
   ]);
   const [cmdHistory, setCmdHistory] = useState([]);
@@ -46,10 +46,10 @@ export default function TerminalPlayground({ isOpen, onClose, settings }) {
   }, []);
 
   // Dynamic values
-  const ownerName = settings?.hero_heading || 'Naveen';
-  const about = settings?.about_text || 'Final Year CS Student specializing in AI, full stack systems, and robotics.';
+  const ownerName = settings?.hero_heading || 'Naveen S';
+  const about = settings?.about_text || 'Software Engineer-in-Training with experience in backend systems, document intelligence, applied machine learning, and GenAI tooling.';
   const email = settings?.email || 'naveenselvaraj.selva@gmail.com';
-  const location = settings?.location || 'Bangalore, India';
+  const location = settings?.location || 'Bengaluru, India';
 
   const commandsHelpText = `Available Console Commands:
   whoami          Professional profile & background
@@ -75,7 +75,7 @@ export default function TerminalPlayground({ isOpen, onClose, settings }) {
   const commands = {
     help: commandsHelpText,
 
-    whoami: `${ownerName} | Software Engineer & AI Solutions Architect
+    whoami: `${ownerName} | Software Engineer
 Location : ${location}
 Focus    : Full Stack Systems, LLM Pipelines, AI Agents & Robotics
 About    : ${about}`,
@@ -83,7 +83,10 @@ About    : ${about}`,
     skills: `Technical Stack Breakdown:
 Frontend : React, Next.js, TypeScript, Tailwind CSS, Framer Motion, Three.js
 Backend  : Node.js, Express, Python, PostgreSQL, Redis, REST APIs
-AI/Cloud : Gemini API, LangChain, Vector Databases, GCP, Docker, CI/CD`,
+AI/Cloud : Gemini API, LangChain, Vector Databases, GCP, Docker, CI/CD
+ML : Transformers , Explainable AI 
+Database : MongoDB , Neon Postgres , Supabase , MySQL`,
+
 
     exp: `Experience & Leadership Highlights:
 • Full Stack & AI Engineer - PatentEase & AI Projects (2024 - Present)
@@ -92,11 +95,11 @@ AI/Cloud : Gemini API, LangChain, Vector Databases, GCP, Docker, CI/CD`,
 • Research Projects: 2 IEEE-oriented publication papers.`,
 
     edu: `Academic Background:
-🎓 Degree    : B.Tech in Computer Science & Engineering
-📍 Location  : Bangalore, India
-📅 Graduation: 2027`,
+    Degree    : B.Tech in Computer Science & Engineering
+    Location  : Bangalore, India
+    Graduation: 2027`,
 
-    pwd: `/workspace/naveen-hq`,
+    pwd: `/workspace/nh44-cave`,
 
     ls: `drwxr-xr-x  Overview/      -> Home.jsx
 drwxr-xr-x  Timeline/      -> Journey.md
@@ -105,7 +108,7 @@ drwxr-xr-x  Journal/       -> Blog.md
 drwxr-xr-x  Credentials/   -> Resume.pdf
 drwxr-xr-x  Integrations/  -> Github.json & Publications.json`,
 
-    tree: `naveen-hq/
+    tree: `nh44-cave/
 ├── Overview/
 │   └── Home.jsx
 ├── Timeline/
@@ -155,14 +158,14 @@ drwxr-xr-x  Integrations/  -> Github.json & Publications.json`,
         setHistory(newHistory);
         setTimeout(() => { navigate('/resume'); onClose(); }, 400);
       } else if (lowerTrimmed === 'contact') {
-        newHistory.push({ 
-          type: 'output', 
-          text: `Contact Info:\nEmail: ${email}\nLocation: ${location}\nNavigating to contact page...` 
+        newHistory.push({
+          type: 'output',
+          text: `Contact Info:\nEmail: ${email}\nLocation: ${location}\nNavigating to contact page...`
         });
         setHistory(newHistory);
         setTimeout(() => { navigate('/contact'); onClose(); }, 600);
       } else if (lowerTrimmed === 'projects' || lowerTrimmed === 'get projects') {
-        const text = projectsList.length > 0 
+        const text = projectsList.length > 0
           ? `Available Projects:\n${projectsList.map((p, idx) => `  ${idx + 1}. [id: ${p.slug || p.id}] ${p.title}`).join('\n')}\n\nType "open <id>" or "open <number>" to view details.`
           : 'No projects found in workspace.';
         newHistory.push({ type: 'output', text });
@@ -271,7 +274,7 @@ drwxr-xr-x  Integrations/  -> Github.json & Publications.json`,
           </div>
 
           {/* Terminal History Container */}
-          <div 
+          <div
             className="flex-1 p-5 overflow-y-auto space-y-3 cursor-text text-slate-300 selection:bg-accent/40 selection:text-white"
             onClick={() => inputRef.current?.focus()}
             data-lenis-prevent
@@ -316,7 +319,7 @@ drwxr-xr-x  Integrations/  -> Github.json & Publications.json`,
           <div className="px-4 py-2 bg-[#0A0A0D] border-t border-white/5 text-[9px] text-slate-500 flex items-center justify-between font-mono">
             <span className="flex items-center gap-1.5">
               <Sparkles className="w-3 h-3 text-accent" />
-              <span>HQ Interactive Terminal Shell</span>
+              <span>cave terminal shell</span>
             </span>
             <span>Type "help" for commands</span>
           </div>
