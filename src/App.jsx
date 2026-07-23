@@ -32,17 +32,12 @@ export default function App() {
       const settingsData = await api.get('/api/settings');
       setSettings(settingsData);
 
-      // Inject dynamic accent CSS variables
-      if (settingsData.accent_color) {
-        document.documentElement.style.setProperty('--accent', settingsData.accent_color);
-        
-        // Handle hex to rgb for opacity-based glow effects
-        let glowColor = 'rgba(79, 70, 229, 0.15)';
-        if (settingsData.accent_color.startsWith('#')) {
-          glowColor = `${settingsData.accent_color}26`; // 15% opacity hex
-        }
-        document.documentElement.style.setProperty('--accent-glow', glowColor);
-      }
+      // Inject dynamic accent CSS variables (prefer user local selection, then settings, default to Gotham Gold #EAB308)
+      const activeAccent = localStorage.getItem('accent_color') || settingsData?.accent_color || '#EAB308';
+      document.documentElement.style.setProperty('--accent', activeAccent);
+      
+      let glowColor = `${activeAccent}26`;
+      document.documentElement.style.setProperty('--accent-glow', glowColor);
 
       // Update Favicon and Title
       if (settingsData.seo_title) {

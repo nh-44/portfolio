@@ -202,9 +202,12 @@ export default function ConsoleLayout({ children, settings, onOpenTerminal }) {
 
   // Dynamic Accent switcher
   const handleAccentChange = (colorHex) => {
+    try {
+      localStorage.setItem('accent_color', colorHex);
+    } catch (e) {}
     document.documentElement.style.setProperty('--accent', colorHex);
-    // Create glow color with 12% opacity
-    const glowColor = `${colorHex}1f`;
+    // Create glow color with 15% opacity
+    const glowColor = `${colorHex}26`;
     document.documentElement.style.setProperty('--accent-glow', glowColor);
   };
 
@@ -504,9 +507,9 @@ export default function ConsoleLayout({ children, settings, onOpenTerminal }) {
               <div className="text-[9px] text-slate-500 mb-2 font-bold">ACCENT THEME</div>
               <div className="grid grid-cols-5 gap-1.5">
                 {[
-                  { name: 'cyan', hex: '#06B6D4' },
-                  { name: 'steel', hex: '#94A3B8' },
                   { name: 'gold', hex: '#EAB308' },
+                  { name: 'steel', hex: '#3F3F46' },
+                  { name: 'cyan', hex: '#06B6D4' },
                   { name: 'blue', hex: '#2563EB' },
                   { name: 'red', hex: '#EF4444' }
                 ].map((c) => (
