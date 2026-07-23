@@ -102,34 +102,17 @@ export default function Skills() {
             return (
               <motion.div
                 key={skill.id}
-                whileHover={{ y: -5, scale: 1.01, borderColor: 'var(--accent)' }}
+                whileHover={{ y: -4, scale: 1.01, borderColor: 'var(--accent)' }}
                 transition={{ type: 'spring', stiffness: 350, damping: 20 }}
-                className="glass-card rounded-2xl p-6 border border-white/10 flex flex-col justify-between group transition-colors duration-300"
+                className="glass-card rounded-2xl p-5 border border-white/10 flex items-center justify-between group transition-colors duration-300"
               >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2.5 rounded-xl bg-slate-800 border border-slate-700 text-sky-400 group-hover:scale-110 group-hover:border-sky-500/50 transition-all">
-                        <IconComponent className="w-5 h-5" />
-                      </div>
-                      <h4 className="font-semibold text-white text-base">
-                        {skill.name}
-                      </h4>
-                    </div>
-                    <span className="text-xs font-mono font-bold text-sky-400 bg-sky-500/10 px-2.5 py-1 rounded-lg border border-sky-500/20">
-                      {skill.level}%
-                    </span>
+                <div className="flex items-center gap-3.5">
+                  <div className="p-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-300 group-hover:scale-110 group-hover:text-accent group-hover:border-accent/40 transition-all">
+                    <IconComponent className="w-5 h-5" />
                   </div>
-                </div>
-
-                {/* Level Progress Bar */}
-                <div className="w-full bg-slate-800/80 h-2 rounded-full overflow-hidden p-0.5 border border-white/5 mt-2">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: `${skill.level}%` }}
-                    transition={{ duration: 0.8, delay: index * 0.05 }}
-                    className="h-full rounded-full bg-gradient-to-r from-sky-400 to-indigo-500 shadow-sm"
-                  />
+                  <h4 className="font-semibold text-white text-sm sm:text-base">
+                    {skill.name}
+                  </h4>
                 </div>
               </motion.div>
             );
