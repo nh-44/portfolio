@@ -4,8 +4,8 @@
 @import "@fontsource-variable/geist";
 
 :root {
-  --accent: #EAB308; /* Nolan Trilogy Batman Gold/Amber */
-  --accent-glow: rgba(234, 179, 8, 0.12);
+  --accent: #94A3B8; /* Steel Grey / Tactical Slate Metallic Accent */
+  --accent-glow: rgba(148, 163, 184, 0.15);
 }
 
 @tailwind base;

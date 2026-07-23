@@ -1,62 +1,62 @@
 export const personalInfo = {
-  name: "Naveen",
-  title: "Full Stack Engineer & AI Solutions Architect",
-  tagline: "Crafting high-performance web applications, intelligent systems & intuitive digital experiences.",
-  about: "I'm a passionate Software Engineer and final year Computer Science student. I design full-stack systems, orchestrate cloud platforms, and program robotics.",
-  location: "Bangalore, India",
+  name: "Naveen S",
+  title: "Software Engineer — Backend, Document Intelligence & Applied ML",
+  tagline: "Building high-performance backend systems, document intelligence pipelines, and GenAI tooling.",
+  about: "Software Engineer-in-Training with experience in backend systems, document intelligence, applied machine learning, and GenAI tooling. Proven ability to build data processing pipelines involving PDF parsing, semantic similarity, and LLM-based reasoning. Demonstrated leadership across innovation projects, hackathons, and IEEE-published research.",
+  location: "Bengaluru, India",
   email: "naveenselvaraj.selva@gmail.com",
-  status: "Available for high-impact roles & research",
+  phone: "+91 89511 12467",
+  status: "Available for Internships",
   resumeUrl: "/resume",
   socials: {
     github: "https://github.com/nh-44",
     linkedin: "https://www.linkedin.com/in/nh44/",
     instagram: "https://www.instagram.com/naveenselvaraj_/",
-    twitter: "https://x.com",
     email: "naveenselvaraj.selva@gmail.com"
   },
   stats: [
-    { label: "Projects Completed", value: "15+" },
-    { label: "Technologies", value: "20+" },
-    { label: "GitHub Contributions", value: "1,200+" },
-    { label: "System Uptime", value: "99.9%" },
+    { label: "Projects & Research", value: "6+" },
+    { label: "Hackathon Wins", value: "1st Place" },
+    { label: "IEEE Publications", value: "1 Paper" },
+    { label: "Teams Led", value: "35+ Members" }
   ]
 };
 
 export const skillsData = [
   {
-    category: "Frontend Architecture",
-    description: "Building responsive, modern, and accessible client interfaces.",
-    items: [
-      { name: "React / Next.js", level: 95, icon: "Code2" },
-      { name: "TypeScript", level: 90, icon: "FileCode" },
-      { name: "Tailwind CSS & Modern Design", level: 95, icon: "Palette" },
-      { name: "Framer Motion / GSAP", level: 88, icon: "Sparkles" },
-      { name: "Three.js / WebGL", level: 75, icon: "Box" },
-      { name: "Redux / Zustand", level: 92, icon: "Layers" }
-    ]
-  },
-  {
-    category: "Backend & Systems",
-    description: "Designing robust APIs, cloud infrastructure, and microservices.",
+    category: "Backend & Web Architecture",
+    description: "Engineering scalable server pipelines, REST APIs, and database stores.",
     items: [
       { name: "Node.js & Express", level: 92, icon: "Server" },
-      { name: "Python / FastAPI / Django", level: 88, icon: "Terminal" },
-      { name: "PostgreSQL & Neon DB", level: 90, icon: "Database" },
-      { name: "GraphQL & REST APIs", level: 92, icon: "Network" },
-      { name: "Redis & Caching", level: 85, icon: "Zap" },
-      { name: "Docker & Cloud Deployments", level: 80, icon: "Container" }
+      { name: "Python / FastAPI", level: 95, icon: "Terminal" },
+      { name: "PostgreSQL & Supabase", level: 90, icon: "Database" },
+      { name: "REST APIs & RBAC Auth", level: 92, icon: "Network" },
+      { name: "React & Next.js", level: 88, icon: "Code2" },
+      { name: "C / C++", level: 85, icon: "FileCode" }
     ]
   },
   {
-    category: "AI & Cloud Engineering",
-    description: "Deploying machine learning models and scalable cloud pipelines.",
+    category: "ML, AI & Document Intelligence",
+    description: "Building explainable vision transformer models and semantic document search.",
     items: [
-      { name: "Gemini API & OpenAI Integrations", level: 90, icon: "Cpu" },
-      { name: "LangChain & Vector Databases", level: 85, icon: "Brain" },
-      { name: "Google Cloud Platform", level: 88, icon: "Cloud" },
-      { name: "AWS Cloud Infrastructure", level: 82, icon: "CloudSun" },
-      { name: "CI/CD & GitHub Actions", level: 90, icon: "GitBranch" },
-      { name: "System Security & Auth", level: 90, icon: "ShieldCheck" }
+      { name: "Document Parsing & OCR", level: 94, icon: "FileText" },
+      { name: "Semantic Similarity & Embeddings", level: 92, icon: "Brain" },
+      { name: "Vision Transformers (BEiT)", level: 88, icon: "Cpu" },
+      { name: "Explainable AI (Grad-CAM, SHAP, LIME)", level: 90, icon: "Sparkles" },
+      { name: "LLM Reasoning & RAG", level: 90, icon: "Layers" },
+      { name: "Scikit-learn & Random Forests", level: 85, icon: "Zap" }
+    ]
+  },
+  {
+    category: "Cloud, DevOps & Tools",
+    description: "Cloud infrastructure management and automated deployment pipelines.",
+    items: [
+      { name: "AWS (Cloud Practitioner)", level: 88, icon: "Cloud" },
+      { name: "Amazon Bedrock & Amazon Q", level: 85, icon: "CloudSun" },
+      { name: "Docker & Kubernetes", level: 80, icon: "Container" },
+      { name: "GitHub Actions & CI/CD", level: 88, icon: "GitBranch" },
+      { name: "MATLAB & Simulink", level: 82, icon: "Sliders" },
+      { name: "Fusion 360 & Hardware", level: 80, icon: "Box" }
     ]
   }
 ];
@@ -64,67 +64,126 @@ export const skillsData = [
 export const projectsData = [
   {
     id: "patentease",
-    title: "PatentEase - AI Patent Automation",
-    category: "AI / Full Stack",
+    title: "PatentEase (Capstone Project)",
+    category: "AI / Capstone",
     filterTag: "ai",
-    description: "Intelligent IP automation system featuring real-time patent prior-art analysis, claims drafting, and automated document generation.",
-    fullDescription: "PatentEase is a cutting-edge platform combining LLM reasoning capabilities with automated IP workflows. Engineered using React, Express, PostgreSQL, and Gemini API integrations.",
-    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
-    tags: ["React", "Express", "PostgreSQL", "Gemini API", "Tailwind CSS"],
+    description: "Developing an end-to-end AI document processing pipeline for patent officers and inventors to analyze claims, detect novelty, and compute patentability scores.",
+    fullDescription: "PatentEase implements vector embeddings, semantic similarity, and LLM reasoning nodes to compare patent claims against historical registries, offering automated summarization and multilingual translation.",
+    image: "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1200&q=80",
+    tags: ["Python", "NLP", "LLMs", "Vector Embeddings", "PostgreSQL"],
     liveUrl: "#",
-    githubUrl: "#",
+    githubUrl: "https://github.com/nh-44",
     featured: true,
-    metrics: ["Automated Patent Drafting", "99.9% Uptime", "Sub-second AI Search"]
+    metrics: ["Semantic Similarity", "Novelty Detection Engine", "Multilingual Patent Search"]
   },
   {
-    id: "robotics-control",
-    title: "ROS2 Autonomous Rover Suite",
-    category: "Robotics / Embedded",
-    filterTag: "robotics",
-    description: "ROS2 navigation and autonomous telemetry suite for robotic rovers with LiDAR mapping and real-time sensor visualization.",
-    fullDescription: "Autonomous mobile robot control system built on ROS2 Humble, Gazebo simulation, and Python telemetry bridges.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80",
-    tags: ["ROS2", "Python", "C++", "LiDAR", "Gazebo"],
+    id: "lifetag",
+    title: "LifeTag — NFC Emergency Medical ID",
+    category: "Web / Hardware",
+    filterTag: "web",
+    description: "1st Place Winner at Heal-O-Code Hackathon. NFC-based medical ID dashboard providing emergency responders instant access to patient health data.",
+    fullDescription: "Designed with privacy-first role-based access control (First Responders, Doctors, Admin). Features dynamic URLs, emergency-only data views, scan history, and breach detection hooks across 200+ users.",
+    image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
+    tags: ["Next.js", "Express", "Node.js", "NFC Hardware", "RBAC"],
     liveUrl: "#",
-    githubUrl: "#",
+    githubUrl: "https://github.com/nh-44",
     featured: true,
-    metrics: ["SLAM Mapping", "Autonomous Pathfinding", "Real-Time Telemetry"]
+    metrics: ["1st Place Hackathon Winner", "200+ Users Tested", "Privacy-First Access Control"]
+  },
+  {
+    id: "leaf-xai-classifier",
+    title: "Medicinal Leaf XAI Classifier (IEEE INDICON 2025)",
+    category: "ML / Research",
+    filterTag: "ai",
+    description: "Explainable AI classifier identifying medicinal plants utilizing Vision Transformers (BEiT). Published & presented at IEEE INDICON 2025.",
+    fullDescription: "Developed during a 2-month summer research internship at CoDMAV (PES University). Built a multimodal XAI system integrating BEiT, TF-IDF, Grad-CAM, LIME, SHAP, and LRP for botanical verification.",
+    image: "https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?auto=format&fit=crop&w=1200&q=80",
+    tags: ["Python", "BEiT Vision Transformers", "Grad-CAM", "LIME", "SHAP"],
+    liveUrl: "#",
+    githubUrl: "https://github.com/nh-44",
+    featured: true,
+    metrics: ["IEEE INDICON 2025 Publication", "Multimodal XAI Pipeline", "BEiT & Grad-CAM Heatmaps"]
   }
 ];
 
 export const experienceData = [
   {
-    period: "2024 - Present",
-    role: "Full Stack & AI Engineer",
-    company: "PatentEase & AI Projects",
-    description: "Designing end-to-end full-stack architectures, LLM pipelines, and automated cloud workflows.",
-    skills: ["React", "Node.js", "TypeScript", "PostgreSQL", "Gemini API", "Tailwind CSS"]
+    period: "Summer 2025",
+    role: "Research Intern",
+    company: "CoDMAV — PES University",
+    description: "Researched multimodal AI systems combining Vision Transformers (BEiT) and NLP. Built Explainable AI pipelines using Grad-CAM, LIME, SHAP, and LRP. Co-authored research published at IEEE INDICON 2025.",
+    skills: ["Vision Transformers", "Python", "Grad-CAM", "SHAP", "LIME", "NLP"]
+  },
+  {
+    period: "2025 - Present",
+    role: "Club Head",
+    company: "Team Vegavath (Student Innovation Club)",
+    description: "Revived and scaled the club into a leading innovation community on campus. Shifted focus to SDVs, robotics, and automation systems. Organized Ignition 1.0 (Ather Energy) for 230+ participants with a 35-member team.",
+    skills: ["Leadership", "Robotics", "SDVs", "Event Management", "Automation"]
+  },
+  {
+    period: "2025",
+    role: "Teaching Assistant",
+    company: "PES University",
+    description: "Assisted in laboratory sessions, mentoring, evaluation, and academic coordination for MPCA (Microprocessors & Computer Architecture) coursework.",
+    skills: ["Mentorship", "Microprocessors", "Academic Coordination"]
+  },
+  {
+    period: "2024 - 2025",
+    role: "Data Analytics Head",
+    company: "Nexus AWS",
+    description: "Worked with AWS cloud services, conducted hands-on cloud engineering workshops, and explored GenAI tools including Amazon Bedrock and Amazon Q.",
+    skills: ["AWS Cloud", "Amazon Bedrock", "Amazon Q", "Analytics"]
+  },
+  {
+    period: "2024 - 2025",
+    role: "Professional Development Director",
+    company: "Rotaract PESU ECC",
+    description: "Organized skill-building workshops, professional development seminars, and campus collaborations.",
+    skills: ["Workshops", "Event Planning", "Campus Collaborations"]
+  },
+  {
+    period: "2023 - Present",
+    role: "Member & Volunteer",
+    company: "PAWS",
+    description: "Volunteered in animal welfare drives, community outreach, and fundraising initiatives.",
+    skills: ["Community Outreach", "Fundraising", "Volunteering"]
+  },
+  {
+    period: "2023 - Present",
+    role: "Class Representative (3 Years)",
+    company: "PES University",
+    description: "Managed student-faculty coordination, academic communication, and batch logistics across 3 academic years.",
+    skills: ["Communication", "Faculty Liaison", "Logistics"]
   }
 ];
 
 export const terminalCommands = {
   help: `Available Commands:
-  - bio         : Print developer summary & background
+  - whoami      : Print developer summary & background
   - skills      : Output technical stack breakdown
-  - projects    : List top featured projects
+  - projects    : List top capstone & research projects
   - contact     : Get direct email and social profiles
-  - clear       : Clear terminal window
-  - sudo hire   : Unlock secret message ;)`,
+  - clear       : Clear terminal window`,
 
-  bio: `Naveen | Software Engineer & AI Solutions Architect
-Specializing in cloud platforms, high-performance UI systems, AI agents, and robotics.`,
+  whoami: `Naveen S | Software Engineer-in-Training
+Location : Bengaluru, India
+Focus    : Backend Systems, Document Intelligence, Applied ML & GenAI
+About    : Final year CS Student at PES University. Research Intern at CoDMAV. IEEE INDICON 2025 Author.`,
 
-  skills: `Frontend : React, Next.js, TypeScript, Tailwind CSS, Framer Motion
-Backend  : Node.js, Express, Python, PostgreSQL, Redis
-Cloud/AI : GCP, AWS, Gemini API, Docker, CI/CD`,
+  skills: `Languages : Python, C, C++, JavaScript
+Backend   : Node.js, Express, React, Next.js, REST APIs, RBAC
+Databases : PostgreSQL, MySQL, Supabase
+ML & AI   : Scikit-learn, Vision Transformers (BEiT), Explainable AI (Grad-CAM, LIME, SHAP)
+Cloud     : AWS (Cloud Practitioner), Amazon Bedrock, Amazon Q, Docker, Kubernetes, CI/CD`,
 
-  projects: `1. PatentEase - AI Patent Automation Platform
-2. ROS2 Autonomous Rover Suite - Autonomous Navigation System`,
+  projects: `1. PatentEase (Capstone Project) - AI Patent Document Processing Pipeline
+2. LifeTag - NFC Emergency Medical ID (1st Place Heal-O-Code Hackathon)
+3. Medicinal Leaf XAI Classifier - IEEE INDICON 2025 Research Paper
+4. Fuel Injection Digital Twin - Top 10 HAL Aerothon
+5. Simplified GDPR Consent Manager (SGCM)`,
 
   contact: `Email    : naveenselvaraj.selva@gmail.com
-GitHub   : github.com
-LinkedIn : linkedin.com`,
-
-  "sudo hire": `>>> PERMISSION GRANTED: You've discovered the easter egg!
-Let's talk! Shoot an email to naveenselvaraj.selva@gmail.com with code "EASTEREGG"`
+GitHub   : https://github.com/nh-44
+LinkedIn : https://www.linkedin.com/in/nh44/`
 };

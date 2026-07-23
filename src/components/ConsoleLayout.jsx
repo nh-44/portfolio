@@ -501,9 +501,9 @@ export default function ConsoleLayout({ children, settings, onOpenTerminal }) {
               <div className="text-[9px] text-slate-500 mb-2 font-bold">ACCENT THEME</div>
               <div className="grid grid-cols-3 gap-2">
                 {[
+                  { name: 'steel', hex: '#94A3B8' },
                   { name: 'gold', hex: '#EAB308' },
-                  { name: 'blue', hex: '#2563EB' },
-                  { name: 'purple', hex: '#A855F7' }
+                  { name: 'blue', hex: '#2563EB' }
                 ].map((c) => (
                   <button
                     key={c.name}

@@ -76,7 +76,7 @@ const seed = async () => {
       "© 2026 Naveen S. Built with precision and growth.",
       "Naveen S — Software Engineer & Machine Learning",
       "Personal digital headquarters and portfolio of Naveen S. Showcasing software architecture, GenAI pipelines, and robotics navigation stacks.",
-      "#EAB308", // Nolan Batman Gold
+      "#94A3B8", // Steel Grey / Tactical Slate Accent
       "https://res.cloudinary.com/demo/image/upload/v1234567890/favicon.ico",
       process.env.GOOGLE_CLIENT_ID || ''
     ];
@@ -284,12 +284,12 @@ HotShot is a personal project creating a real-time classroom and panel polling i
     ]);
 
     await client.query(journeyQuery, [
-      "Club Head — Team Vegavath",
+      "Club Head — Team Vegavath (Student Innovation Club)",
       "2025 - Present",
-      "Revived and scaled the university's technical innovation club. Directed operations for 35+ members focusing on robotics, automation, and go-kart builds.",
+      "Revived and scaled the university's technical innovation club. Shifted focus to SDVs, robotics, and automation systems. Organized Ignition 1.0 (Ather Energy) attracting 230+ participants with a 35-member team.",
       "Leadership",
-      "revived and scaled communities. Organized Ignition 1.0 (Ather Energy) attracting 230+ participants.",
-      JSON.stringify(["Project Management", "Robotics", "Arduino", "Raspberry Pi"]),
+      "Scaling technical communities requires cross-functional management across engineering, SDVs, robotics, and event logistics.",
+      JSON.stringify(["Leadership", "SDVs", "Robotics", "Event Management"]),
       "Bengaluru",
       "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=400&q=80",
       JSON.stringify([]),
@@ -297,16 +297,42 @@ HotShot is a personal project creating a real-time classroom and panel polling i
     ]);
 
     await client.query(journeyQuery, [
-      "GDG Bangalore & Hackathon Triumphs",
+      "Teaching Assistant — PES University",
       "2025",
-      "Active contributor inside GDG Bangalore. Won 1st Place at Heal-O-Code Hackathon (LifeTag) and Top 10 at HAL Aerothon.",
-      "Hackathon",
-      "Rapid prototyping under constraints teaches you to focus only on workflows that validate assumptions directly.",
-      JSON.stringify(["Next.js", "Express", "NFC Integrations"]),
+      "Assisted in laboratory sessions, mentoring, evaluation, and academic coordination for MPCA (Microprocessors & Computer Architecture) coursework.",
+      "Academics",
+      "Explaining low-level hardware concepts solidifies your own mental model of computer architecture.",
+      JSON.stringify(["Microprocessors", "Mentorship", "Academic Coordination"]),
       "Bengaluru",
-      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=400&q=80",
       JSON.stringify([]),
       6
+    ]);
+
+    await client.query(journeyQuery, [
+      "Data Analytics Head — Nexus AWS",
+      "2024 - 2025",
+      "Conducted hands-on cloud engineering workshops, managed AWS services, and explored GenAI tools including Amazon Bedrock and Amazon Q.",
+      "Leadership",
+      "Hands-on cloud workshops bridge theoretical knowledge with practical architecture design.",
+      JSON.stringify(["AWS", "Amazon Bedrock", "Amazon Q", "Cloud Workshops"]),
+      "Bengaluru",
+      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=400&q=80",
+      JSON.stringify([]),
+      7
+    ]);
+
+    await client.query(journeyQuery, [
+      "Professional Development Director — Rotaract PESU ECC",
+      "2024 - 2025",
+      "Organized skill-building workshops, professional development seminars, and campus collaborations.",
+      "Leadership",
+      "Fostering professional skill building builds strong campus networks.",
+      JSON.stringify(["Professional Development", "Event Planning", "Networking"]),
+      "Bengaluru",
+      "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=400&q=80",
+      JSON.stringify([]),
+      8
     ]);
 
     console.log("Seeded journey timeline.");

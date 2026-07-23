@@ -6,9 +6,9 @@ export default function Footer({ settings }) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const footerText = settings?.footer_text || `© ${new Date().getFullYear()} Naveen. All rights reserved.`;
+  const footerText = settings?.footer_text || `© ${new Date().getFullYear()} Naveen S. All rights reserved.`;
   const name = settings?.hero_heading || 'Naveen';
-  
+
   // Extract social links
   const socials = settings?.social_links || {};
   const focusItems = settings?.current_focus || [];
@@ -43,30 +43,36 @@ export default function Footer({ settings }) {
           {/* Socials & Top Trigger */}
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-4 text-xs font-mono text-slate-400">
-              <a
-                href={socials.github || "https://github.com/nh-44"}
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-accent transition-colors"
-              >
-                GitHub
-              </a>
-              <a
-                href={socials.linkedin || "https://www.linkedin.com/in/nh44/"}
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-accent transition-colors"
-              >
-                LinkedIn
-              </a>
-              <a
-                href={socials.instagram || "https://www.instagram.com/naveenselvaraj_/"}
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-accent transition-colors"
-              >
-                Instagram
-              </a>
+              {socials.github && (
+                <a
+                  href={socials.github}
+                  target="https://github.com/nh-44/"
+                  rel="noreferrer"
+                  className="hover:text-accent transition-colors"
+                >
+                  GitHub
+                </a>
+              )}
+              {socials.linkedin && (
+                <a
+                  href={socials.linkedin}
+                  target="https://www.linkedin.com/in/nh44/"
+                  rel="noreferrer"
+                  className="hover:text-accent transition-colors"
+                >
+                  LinkedIn
+                </a>
+              )}
+              {socials.twitter && (
+                <a
+                  href={socials.twitter}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-accent transition-colors"
+                >
+                  Twitter
+                </a>
+              )}
             </div>
 
             <button

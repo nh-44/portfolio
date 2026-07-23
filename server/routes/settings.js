@@ -19,19 +19,19 @@ const getOrInitSettings = async () => {
     RETURNING *
   `;
   const values = [
-    "Naveen",
-    "Building high-performance software, intelligent systems & robotic automations.",
-    JSON.stringify(["PatentEase", "AI Agents", "Robotics", "Cloud", "Automation"]),
+    "Naveen S",
+    "Software Engineer-in-Training specializing in backend systems, document intelligence, applied machine learning, and GenAI tooling.",
+    JSON.stringify(["Document Intelligence", "GenAI Tooling", "Applied ML", "Backend Systems"]),
     "",
-    "I'm a passionate Software Engineer and final year Computer Science student. I design full-stack systems, orchestrate cloud platforms, and program robotics.",
-    JSON.stringify(["Final Year CS Student", "AI & Robotics", "Full Stack Engineer", "Bangalore, India"]),
+    "Software Engineer-in-Training with experience in backend systems, document intelligence, applied machine learning, and GenAI tooling. Proven ability to build data processing pipelines involving PDF parsing, semantic similarity, and LLM-based reasoning. Demonstrated leadership across innovation projects, hackathons, and IEEE-published research.",
+    JSON.stringify(["Final Year CS Student at PES University", "AI & ML", "Automotives", "Coding"]),
     JSON.stringify({ github: "https://github.com/nh-44", linkedin: "https://www.linkedin.com/in/nh44/", instagram: "https://www.instagram.com/naveenselvaraj_/", email: "naveenselvaraj.selva@gmail.com" }),
-    "Bangalore, India",
+    "Bengaluru, India",
     "naveenselvaraj.selva@gmail.com",
-    "© 2026 Naveen. All rights reserved.",
-    "Naveen — Full Stack Engineer",
-    "Personal portfolio and digital headquarters of Naveen.",
-    "#EAB308",
+    "© 2026 Naveen S. All rights reserved.",
+    "Naveen S — Software Engineer & AI Specialist",
+    "Personal portfolio and digital headquarters of Naveen S, Software Engineer specializing in Document Intelligence, GenAI, and Backend Systems.",
+    "#94A3B8",
     ""
   ];
 
