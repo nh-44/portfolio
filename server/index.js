@@ -23,20 +23,28 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
+app.set('trust proxy', 1);
 const PORT = process.env.PORT || 5000;
 
 // Enable CORS
 const allowedOrigins = [
-  'http://localhost:5173', // Vite default dev server
+  'http://localhost:5173',
   'http://localhost:3000',
-  'http://127.0.0.1:5173'
+  'http://127.0.0.1:5173',
+  'https://nh44.dev',
+  'https://www.nh44.dev'
 ];
 
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow requests with no origin (like mobile apps or curl)
+    // Allow requests with no origin (like mobile apps, curl, or same-origin)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV !== 'production') {
+    if (
+      allowedOrigins.indexOf(origin) !== -1 ||
+      origin.endsWith('.vercel.app') ||
+      origin.includes('nh44.dev') ||
+      process.env.NODE_ENV !== 'production'
+    ) {
       return callback(null, true);
     }
     return callback(new Error('Not allowed by CORS'));
