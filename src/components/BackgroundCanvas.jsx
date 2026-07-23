@@ -217,7 +217,22 @@ function TacticalMeshCanvas() {
   );
 }
 
-export default function BackgroundCanvas() {
-  // Default to the original tactical mesh
-  return <TacticalMeshCanvas />;
+export default function BackgroundCanvas({ settings }) {
+  let rawBgConfig = settings?.background_config || {};
+  if (typeof rawBgConfig === 'string') {
+    try {
+      rawBgConfig = JSON.parse(rawBgConfig);
+    } catch (e) {
+      rawBgConfig = {};
+    }
+  }
+
+  const bgTheme = settings?.background_theme || rawBgConfig.theme || 'beams';
+
+  // Only render tactical mesh canvas if it is selected as the active theme
+  if (bgTheme === 'tactical_mesh') {
+    return <TacticalMeshCanvas />;
+  }
+
+  return null;
 }

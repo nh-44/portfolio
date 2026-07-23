@@ -136,6 +136,15 @@ export default function ConsoleLayout({ children, settings, onOpenTerminal }) {
     return `${h}:${m}:${s}`;
   };
 
+  const contentViewportRef = useRef(null);
+
+  // Scroll active content viewport back to top on every route change
+  useEffect(() => {
+    if (contentViewportRef.current) {
+      contentViewportRef.current.scrollTop = 0;
+    }
+  }, [location.pathname]);
+
   const toggleFolder = (folder) => {
     setExpandedFolders(prev => ({
       ...prev,
@@ -375,11 +384,8 @@ export default function ConsoleLayout({ children, settings, onOpenTerminal }) {
             {/* Background inside the central workspace content area (below tab bar, between sidebars) */}
             <div className="absolute inset-0 pointer-events-none z-0 opacity-30 select-none overflow-hidden">
               <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-                {bgTheme === 'antigravity' ? (
-                  <Antigravity {...antigravityProps} />
-                ) : (
-                  <Beams {...beamsProps} />
-                )}
+                {bgTheme === 'antigravity' && <Antigravity {...antigravityProps} />}
+                {bgTheme === 'beams' && <Beams {...beamsProps} />}
               </div>
             </div>
 
@@ -391,7 +397,11 @@ export default function ConsoleLayout({ children, settings, onOpenTerminal }) {
             </div>
 
             {/* Main Content viewport with Framer Motion slide-fade reveals */}
-            <div className="flex-grow overflow-y-auto px-4 sm:px-8 py-8 relative h-full z-10 flex flex-col justify-between" data-lenis-prevent>
+            <div 
+              ref={contentViewportRef}
+              className="flex-grow overflow-y-auto px-4 sm:px-8 py-8 relative h-full z-10 flex flex-col justify-between" 
+              data-lenis-prevent
+            >
               <div className="max-w-5xl mx-auto pb-16 w-full flex-grow flex flex-col justify-between">
                 <AnimatePresence mode="wait">
                   <motion.div
