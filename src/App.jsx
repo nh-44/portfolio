@@ -54,6 +54,10 @@ export default function App() {
       }
     } catch (err) {
       console.error('Failed to fetch site settings:', err);
+      // Fallback: preserve local choice or default to Gold (#EAB308)
+      const fallbackAccent = localStorage.getItem('accent_color') || '#EAB308';
+      document.documentElement.style.setProperty('--accent', fallbackAccent);
+      document.documentElement.style.setProperty('--accent-glow', `${fallbackAccent}26`);
     }
   };
 
