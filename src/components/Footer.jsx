@@ -11,7 +11,6 @@ export default function Footer({ settings }) {
 
   // Extract social links
   const socials = settings?.social_links || {};
-  const focusItems = settings?.current_focus || [];
 
   return (
     <footer className="py-12 border-t border-white/5 bg-[#09090B] relative z-10 mt-auto">
@@ -26,19 +25,6 @@ export default function Footer({ settings }) {
               {footerText}
             </span>
           </div>
-
-          {/* Current Focus List */}
-          {focusItems.length > 0 && (
-            <div className="flex flex-wrap items-center justify-center gap-2 text-[10px] font-mono text-slate-500">
-              <span className="text-slate-400 font-bold uppercase text-[9px] tracking-wider mr-1">Focus:</span>
-              {focusItems.map((item, idx) => (
-                <span key={idx} className="flex items-center gap-1.5">
-                  {idx > 0 && <span>•</span>}
-                  <span className="text-slate-400">{item}</span>
-                </span>
-              ))}
-            </div>
-          )}
 
           {/* Socials & Top Trigger */}
           <div className="flex items-center gap-6">
@@ -61,16 +47,6 @@ export default function Footer({ settings }) {
                   className="hover:text-accent transition-colors"
                 >
                   LinkedIn
-                </a>
-              )}
-              {socials.twitter && (
-                <a
-                  href={socials.twitter}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover:text-accent transition-colors"
-                >
-                  Twitter
                 </a>
               )}
             </div>

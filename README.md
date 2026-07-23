@@ -7,27 +7,27 @@
 
 ## ⚡ Overview
 
-Welcome to the digital headquarters of **Naveen S** — Full Stack Engineer & AI Solutions Architect. Designed with an immersive, high-tech IDE interface inspired by modern code editors and tactical command consoles, this application delivers a seamless interactive developer portfolio and full-stack management system.
+Welcome to the digital headquarters of **Naveen S** — Full Stack Engineer & AI Solutions Architect. Designed with an immersive, high-tech IDE interface inspired by modern code editors and tactical command consoles, this application delivers a seamless interactive developer portfolio, real-time status panel, interactive CLI terminal, and administrative management suite.
 
 ---
 
 ## ✨ Key Features
 
 ### 🦇 1. Bruce Wayne's Dossier & Status Panel
-- **Live Status & Track Record**: Real-time availability status (`● Available for Internships`), location (Bangalore, India), current mission (`Building PatentEase`), degree details (`🎓 B.Tech CSE '27`), specialization tags, open roles, and track record metrics (Projects, Leadership, Hackathons, Teams Led, Research).
-- **Mobile Drawer Support**: Touchpad gesture scrolling (`data-lenis-prevent`) and responsive drawer access across mobile devices and tablets.
+- **Live Status & Track Record**: Real-time availability status (`● Available for Internships`), location (`Bengaluru, India`), degree (`🎓 B.Tech CSE '27`), current mission (`Building PatentEase`), specialization tags, open roles, and track record metrics (6+ Projects, 4 Leadership Roles, 1st Place Hackathons, 1 IEEE Publication).
+- **Touchpad & Mobile Drawer Support**: Touchpad gesture scrolling (`data-lenis-prevent`) and responsive drawer access across mobile devices and tablets.
 
-### 🎨 2. Selectable 3D WebGL Shader Engines
-- **Cinematic Beams Shader** (`@react-bits/Beams-JS-CSS`): Volumetric lighting rays with real-time beam width, height, speed, color, noise intensity, and rotation sliders.
+### 🎨 2. Selectable 3D WebGL Shader Engines & Accent Color Palette
+- **Cinematic Beams Shader** (`@react-bits/Beams-JS-CSS`): Volumetric lighting rays with real-time beam width, height, speed, color, noise intensity, and rotation controls.
 - **Antigravity Particle Field** (`@react-bits/Antigravity-JS-CSS`): Interactive 3D particle physics ring with magnet radius, wave amplitude, particle shape, and field strength parameters.
-- **Tactical Sonar Mesh**: Clean 2D grid canvas with glowing radar reticle sweeps.
+- **Multi-Theme Accent Color Switcher**: Select between **Cyber Cyan (`#06B6D4`)**, **Tactical Steel Metallic (`#94A3B8`)**, **Gotham Gold (`#EAB308`)**, **Electric Blue (`#2563EB`)**, and **Crimson Red (`#EF4444`)**.
 
 ### 💻 3. Interactive Terminal Shell (`/terminal`)
 An embedded terminal emulator offering a bash-style CLI experience with tab completions and keyboard arrow history:
 - `whoami` : Professional profile & developer summary
 - `skills` : Technical stack breakdown
 - `exp` : Experience & leadership highlights
-- `edu` : Academic background (B.Tech CSE '27)
+- `edu` : Academic background (B.Tech CSE '27 @ PES University)
 - `projects` : List all portfolio projects with IDs & serial numbers
 - `open <id|num>` : Navigate directly to project case studies
 - `git` : Navigate to GitHub repository viewer
@@ -38,27 +38,25 @@ An embedded terminal emulator offering a bash-style CLI experience with tab comp
 - `ls` / `tree` / `pwd` : Workspace file structure exploration
 - `clear` / `help` : Shell screen management & command index
 
-### 📜 4. Certifications, Tools & Publications Manager
-- **Dynamic Certifications & Badges**: Upload certificate PDFs, verification links, and custom badge images.
-- **Tools & Technologies Editor**: Categorized skill management across Frontend Architecture, Backend & Systems, and AI & Cloud Engineering.
-- **IEEE & Research Publications**: Upload publication PDFs, DOI links, and abstract summaries.
+### 📥 4. Contact Form Messages & Creator Studio Inbox (`/nh-44`)
+- **PostgreSQL Inbox Database**: Contact form submissions are saved to the PostgreSQL `messages` table and optionally forwarded via SMTP email.
+- **Admin Inbox Viewer**: Review received messages in **Creator Studio (`/nh-44`)** with sender email, subject, message body, quick mailto reply, and message deletion.
 
-### 🛠️ 5. Creator Studio Administrative HQ (`/nh-44`)
+### 🎉 5. Celebratory Confetti & Toast Notification System
+- Fires celebratory confetti bursts and renders floating success toast notification banners upon saving settings, updating dossier data, uploading files, or submitting forms.
+
+### 🛠️ 6. Creator Studio Administrative HQ (`/nh-44`)
 - Secure password-protected administrative portal.
-- Real-time live updating for site settings, hero taglines, current focus, background shader parameters, and Dossier status metrics.
+- Real-time live updating for site settings, hero taglines, background shader parameters, certifications, journey milestones, publications, and Dossier status metrics.
 - Direct Cloudinary file upload integration for resumes, certificates, badges, and project media.
-
-### 🐙 6. GitHub Repository & Documentation Sync
-- Automatic repository sync with live star counts, fork counts, topic tags, and primary language indicators.
-- Instant in-app `README.md` decoding and markdown rendering for expanded repositories using `react-markdown`.
 
 ---
 
 ## 🏗️ Technical Stack
 
-- **Frontend**: React 19, Vite, Tailwind CSS, Framer Motion, Three.js, Lucide Icons, React Markdown, Canvas PDF Renderer
-- **Backend API**: Node.js, Express.js, PostgreSQL (Neon DB / SSL Pool), Cloudinary SDK, JWT Auth
-- **Design System**: IDE Dark Mode, Custom HSL Accents (Gold / Blue / Purple), Glassmorphism, Micro-animations
+- **Frontend**: React 19, Vite, Tailwind CSS, Framer Motion, Three.js, Lucide Icons, React Markdown, Canvas Confetti
+- **Backend API**: Node.js, Express.js, PostgreSQL (Neon DB / SSL Pool), Cloudinary SDK, JWT Auth, Nodemailer SMTP
+- **Design System**: IDE Dark Mode, Cyber Cyan Neon & Tactical HSL Accents, Glassmorphism, Micro-animations
 
 ---
 
@@ -83,12 +81,10 @@ CLOUDINARY_API_KEY=your_cloudinary_key
 CLOUDINARY_API_SECRET=your_cloudinary_secret
 ```
 
-### 3. Initialize Database Schema
+### 3. Initialize Database Schema & Migrations
 ```bash
-node db/init.js
-node db/alter_settings.js
-node db/alter_background_config.js
-node db/alter_dossier.js
+node db/seed.js
+node db/alter_messages.js
 ```
 
 ### 4. Run Locally
