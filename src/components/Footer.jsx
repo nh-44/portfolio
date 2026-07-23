@@ -43,36 +43,30 @@ export default function Footer({ settings }) {
           {/* Socials & Top Trigger */}
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-4 text-xs font-mono text-slate-400">
-              {socials.github && (
-                <a
-                  href={socials.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover:text-accent transition-colors"
-                >
-                  GitHub
-                </a>
-              )}
-              {socials.linkedin && (
-                <a
-                  href={socials.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover:text-accent transition-colors"
-                >
-                  LinkedIn
-                </a>
-              )}
-              {socials.twitter && (
-                <a
-                  href={socials.twitter}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover:text-accent transition-colors"
-                >
-                  Twitter
-                </a>
-              )}
+              <a
+                href={socials.github || "https://github.com/nh-44"}
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-accent transition-colors"
+              >
+                GitHub
+              </a>
+              <a
+                href={socials.linkedin || "https://www.linkedin.com/in/nh44/"}
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-accent transition-colors"
+              >
+                LinkedIn
+              </a>
+              <a
+                href={socials.instagram || "https://www.instagram.com/naveenselvaraj_/"}
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-accent transition-colors"
+              >
+                Instagram
+              </a>
             </div>
 
             <button

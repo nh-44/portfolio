@@ -8,10 +8,11 @@ export const personalInfo = {
   status: "Available for high-impact roles & research",
   resumeUrl: "/resume",
   socials: {
-    github: "https://github.com",
-    linkedin: "https://linkedin.com",
+    github: "https://github.com/nh-44",
+    linkedin: "https://www.linkedin.com/in/nh44/",
+    instagram: "https://www.instagram.com/naveenselvaraj_/",
     twitter: "https://x.com",
-    devto: "https://dev.to",
+    email: "naveenselvaraj.selva@gmail.com"
   },
   stats: [
     { label: "Projects Completed", value: "15+" },

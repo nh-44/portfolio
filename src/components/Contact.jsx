@@ -29,7 +29,7 @@ export default function Contact({ settings }) {
       await api.post('/api/contact', formData);
       setIsSubmitting(false);
       setSubmitted(true);
-      
+
       // Trigger success confetti
       confetti({
         particleCount: 80,
@@ -71,10 +71,10 @@ export default function Contact({ settings }) {
           >
             <div>
               <h3 className="text-2xl font-bold text-white mb-4">
-                Have a project or opportunity in mind?
+                Have a project or opportunity in mind? Or just wanna network?
               </h3>
               <p className="text-slate-300 text-sm leading-relaxed mb-6">
-                Whether you need full-stack architecture, robotic automations, AI workflows, or cloud infrastructure, I'm always open to discussing new ideas and high-impact roles.
+                Whether you need AI solutions, automation, or just wanna have a chat, I'm always open to discussing new ideas and high-impact roles.
               </p>
             </div>
 
@@ -145,7 +145,7 @@ export default function Contact({ settings }) {
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="Naveen"
+                      placeholder="Your Name"
                       className="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-accent transition-colors"
                     />
                   </div>
@@ -158,7 +158,7 @@ export default function Contact({ settings }) {
                       required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="naveen@example.com"
+                      placeholder="username@example.com"
                       className="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-accent transition-colors"
                     />
                   </div>

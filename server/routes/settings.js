@@ -25,7 +25,7 @@ const getOrInitSettings = async () => {
     "",
     "I'm a passionate Software Engineer and final year Computer Science student. I design full-stack systems, orchestrate cloud platforms, and program robotics.",
     JSON.stringify(["Final Year CS Student", "AI & Robotics", "Full Stack Engineer", "Bangalore, India"]),
-    JSON.stringify({ github: "", linkedin: "", twitter: "", email: "" }),
+    JSON.stringify({ github: "https://github.com/nh-44", linkedin: "https://www.linkedin.com/in/nh44/", instagram: "https://www.instagram.com/naveenselvaraj_/", email: "naveenselvaraj.selva@gmail.com" }),
     "Bangalore, India",
     "naveenselvaraj.selva@gmail.com",
     "© 2026 Naveen. All rights reserved.",

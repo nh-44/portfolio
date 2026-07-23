@@ -3,11 +3,11 @@ import { motion } from 'framer-motion';
 import { User, CheckCircle2 } from 'lucide-react';
 
 export default function About({ settings }) {
-  const bio = settings?.about_text || "I'm a passionate Software Engineer and final year Computer Science student. I design full-stack systems, cloud platforms, and program autonomous robotics.";
+  const bio = settings?.about_text || "I'm a passionate Software Engineer and final year Computer Science student at PES University, Bangalore, India.";
   const location = settings?.location || "Bangalore, India";
 
   // Extract quick facts
-  const quickFacts = settings?.quick_facts || ["Final Year CS Student", "AI & Robotics", "Full Stack Engineer", "Bangalore"];
+  const quickFacts = settings?.quick_facts || ["Final Year CS Student at PES University", "AI & ML", "Automotives", "Coding"];
 
   return (
     <section id="about" className="py-24 relative">
@@ -16,10 +16,10 @@ export default function About({ settings }) {
         <div className="flex flex-col items-center text-center mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent text-xs font-mono mb-3">
             <User className="w-3.5 h-3.5" />
-            <span>ABOUT ME</span>
+            <span>ABOUT Moi</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-            Engineering digital experiences with <span className="text-gradient">precision & vision</span>
+            Engineering digital experiences with <span className="text-gradient">precision , vision and teamwork</span>
           </h2>
         </div>
 
@@ -47,7 +47,7 @@ export default function About({ settings }) {
             </p>
 
             <p className="text-slate-400 leading-relaxed text-xs sm:text-sm">
-              My engineering philosophy is inspired by minimal discipline and continuous growth. I believe software engineering is a craft of compounding skills—constantly tackling harder tasks, seeking technical mastery, and shipping optimized code.
+              My engineering philosophy is inspired by understanding the fundamentals and continuous improvement. I believe software engineering is a craft of compounding skills—constantly learning new things, seeking technical mastery, and shipping optimized code.
             </p>
           </div>
 

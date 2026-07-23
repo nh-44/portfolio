@@ -125,7 +125,7 @@ export default function Hero({ settings, onOpenTerminal }) {
               className="flex items-center gap-3 mt-3 mb-1"
             >
               <a
-                href={socials.github || "https://github.com"}
+                href={socials.github || "https://github.com/nh-44"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2.5 rounded-xl bg-slate-900/90 border border-white/10 text-slate-300 hover:text-accent hover:border-accent/40 hover:bg-slate-850 transition-all flex items-center gap-2 text-xs font-mono group"
@@ -135,7 +135,7 @@ export default function Hero({ settings, onOpenTerminal }) {
                 <span className="hidden sm:inline">GitHub</span>
               </a>
               <a
-                href={socials.linkedin || "https://linkedin.com"}
+                href={socials.linkedin || "https://www.linkedin.com/in/nh44/"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2.5 rounded-xl bg-slate-900/90 border border-white/10 text-slate-300 hover:text-accent hover:border-accent/40 hover:bg-slate-850 transition-all flex items-center gap-2 text-xs font-mono group"
@@ -145,7 +145,7 @@ export default function Hero({ settings, onOpenTerminal }) {
                 <span className="hidden sm:inline">LinkedIn</span>
               </a>
               <a
-                href={socials.instagram || "https://instagram.com"}
+                href={socials.instagram || "https://www.instagram.com/naveenselvaraj_/"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2.5 rounded-xl bg-slate-900/90 border border-white/10 text-slate-300 hover:text-accent hover:border-accent/40 hover:bg-slate-850 transition-all flex items-center gap-2 text-xs font-mono group"
