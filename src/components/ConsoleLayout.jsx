@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { 
-  Folder, FolderOpen, FileCode, FileText, Terminal, Settings, 
-  Clock, Activity, Menu, X, ChevronRight, ChevronDown, 
+import {
+  Folder, FolderOpen, FileCode, FileText, Terminal, Settings,
+  Clock, Activity, Menu, X, ChevronRight, ChevronDown,
   Terminal as ConsoleIcon, Database, Sparkles, HelpCircle,
   Cpu, Wifi, MousePointer, ShieldCheck
 } from 'lucide-react';
@@ -24,12 +24,11 @@ export default function ConsoleLayout({ children, settings, onOpenTerminal }) {
     graduation: "2027",
     currentMission: "Building PatentEase",
     specialization: ["AI", "Backend", "Cloud"],
-    openTo: ["SDE", "AI Engineer", "Backend Engineer"],
+    openTo: ["SDE", "AI Engineer", "Data Analyst"],
     stats: {
       projects: "15+",
       leadershipRoles: "3",
       hackathons: "8",
-      teamsLed: "35+",
       researchProjects: "2"
     }
   };
@@ -41,7 +40,7 @@ export default function ConsoleLayout({ children, settings, onOpenTerminal }) {
       try {
         const parsed = JSON.parse(settings.dossier);
         dossierData = { ...dossierData, ...parsed };
-      } catch (e) {}
+      } catch (e) { }
     }
   }
 
@@ -87,7 +86,7 @@ export default function ConsoleLayout({ children, settings, onOpenTerminal }) {
     fieldStrength: 10,
     ...(rawBgConfig.antigravity || {})
   };
-  
+
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [expandedFolders, setExpandedFolders] = useState({
     overview: true,
@@ -232,11 +231,10 @@ export default function ConsoleLayout({ children, settings, onOpenTerminal }) {
 
           return (
             <div key={folderKey} className="space-y-1">
-              <div 
+              <div
                 onClick={() => toggleFolder(folderKey)}
-                className={`flex items-center gap-1.5 py-1 px-2 rounded-lg hover:bg-white/5 cursor-pointer transition-colors ${
-                  isFolderActive ? 'text-accent' : 'text-slate-400 hover:text-slate-200'
-                }`}
+                className={`flex items-center gap-1.5 py-1 px-2 rounded-lg hover:bg-white/5 cursor-pointer transition-colors ${isFolderActive ? 'text-accent' : 'text-slate-400 hover:text-slate-200'
+                  }`}
               >
                 {isExpanded ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
                 {isExpanded ? <FolderOpen className="w-3.5 h-3.5" /> : <Folder className="w-3.5 h-3.5" />}
@@ -249,11 +247,10 @@ export default function ConsoleLayout({ children, settings, onOpenTerminal }) {
                     <div
                       key={item.path}
                       onClick={() => handleNav(item.path)}
-                      className={`flex items-center justify-between py-1.5 px-2.5 rounded-lg cursor-pointer transition-all ${
-                        location.pathname === item.path || (item.path !== '/' && location.pathname.startsWith(item.path))
+                      className={`flex items-center justify-between py-1.5 px-2.5 rounded-lg cursor-pointer transition-all ${location.pathname === item.path || (item.path !== '/' && location.pathname.startsWith(item.path))
                           ? 'bg-accent/10 border-l-2 border-accent text-white font-medium pl-2'
                           : 'hover:bg-white/5 text-slate-400 hover:text-slate-200'
-                      }`}
+                        }`}
                     >
                       <div className="flex items-center gap-2">
                         {item.type === 'code' && <FileCode className="w-3.5 h-3.5 text-sky-400" />}
@@ -274,12 +271,12 @@ export default function ConsoleLayout({ children, settings, onOpenTerminal }) {
 
   return (
     <div className="min-h-screen bg-[#050507] text-slate-100 flex flex-col font-sans relative overflow-hidden">
-      
+
       {/* Top Console Titlebar Header */}
       <header className="h-14 bg-[#070709] border-b border-white/5 flex items-center justify-between px-4 z-50 select-none relative">
         <div className="flex items-center gap-3">
           {/* Mobile hamburger menu toggle */}
-          <button 
+          <button
             onClick={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
             className="lg:hidden p-1.5 rounded-lg bg-white/5 border border-white/5 hover:bg-white/10 text-slate-400 hover:text-white"
           >
@@ -312,7 +309,7 @@ export default function ConsoleLayout({ children, settings, onOpenTerminal }) {
 
       {/* Main Console Split Area */}
       <div className="flex-grow flex relative z-10 h-[calc(100vh-3.5rem-1.5rem)] overflow-hidden">
-        
+
         {/* Left Explorer Sidebar Pane (Desktop) */}
         <aside className="hidden lg:block w-[240px] flex-shrink-0 h-full">
           {sidebarContent}
@@ -322,7 +319,7 @@ export default function ConsoleLayout({ children, settings, onOpenTerminal }) {
         {isMobileSidebarOpen && (
           <div className="lg:hidden fixed inset-0 z-40 flex">
             {/* Backdrop */}
-            <div 
+            <div
               onClick={() => setIsMobileSidebarOpen(false)}
               className="fixed inset-0 bg-black/60 backdrop-blur-sm"
             />
@@ -343,11 +340,10 @@ export default function ConsoleLayout({ children, settings, onOpenTerminal }) {
                 <div
                   key={item.path}
                   onClick={() => handleNav(item.path)}
-                  className={`h-full flex items-center gap-2.5 px-4 border-r border-white/5 text-xs font-mono transition-all relative cursor-pointer border-t ${
-                    isTabActive 
-                      ? 'bg-[#050507] text-white border-t-accent font-semibold' 
+                  className={`h-full flex items-center gap-2.5 px-4 border-r border-white/5 text-xs font-mono transition-all relative cursor-pointer border-t ${isTabActive
+                      ? 'bg-[#050507] text-white border-t-accent font-semibold'
                       : 'text-slate-400 hover:text-slate-200 bg-[#09090C]/50 hover:bg-[#09090C]/80 border-t-transparent'
-                  }`}
+                    }`}
                 >
                   {item.type === 'code' && <FileCode className="w-3.5 h-3.5 text-sky-400" />}
                   {item.type === 'text' && <FileText className="w-3.5 h-3.5 text-amber-400" />}
@@ -492,10 +488,6 @@ export default function ConsoleLayout({ children, settings, onOpenTerminal }) {
                 <div className="bg-[#131318] p-1.5 rounded-lg border border-white/5">
                   <div className="text-xs font-extrabold text-sky-400">{dossierData.stats?.hackathons || '8'}</div>
                   <div className="text-[8px] text-slate-400 font-mono">Hackathons</div>
-                </div>
-                <div className="bg-[#131318] p-1.5 rounded-lg border border-white/5">
-                  <div className="text-xs font-extrabold text-purple-400">{dossierData.stats?.teamsLed || '35+'}</div>
-                  <div className="text-[8px] text-slate-400 font-mono">Teams Led</div>
                 </div>
               </div>
               <div className="bg-[#131318] p-1.5 rounded-lg border border-white/5 text-center mt-1">
