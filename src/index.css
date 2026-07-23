@@ -4,8 +4,8 @@
 @import "@fontsource-variable/geist";
 
 :root {
-  --accent: #06B6D4; /* Cyber Cyan Electric Accent */
-  --accent-glow: rgba(6, 182, 212, 0.18);
+  --accent: #EAB308; /* Gotham Gold Accent */
+  --accent-glow: rgba(234, 179, 8, 0.18);
 }
 
 @tailwind base;

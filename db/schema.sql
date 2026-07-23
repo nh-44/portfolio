@@ -22,7 +22,7 @@ CREATE TABLE site_settings (
     footer_text TEXT NOT NULL DEFAULT '',
     seo_title TEXT NOT NULL DEFAULT '',
     seo_description TEXT NOT NULL DEFAULT '',
-    accent_color TEXT NOT NULL DEFAULT '#6D28D9', -- Accent hex (default: purple)
+    accent_color TEXT NOT NULL DEFAULT '#EAB308', -- Accent hex (default: gold)
     favicon_url TEXT NOT NULL DEFAULT '',
     google_client_id TEXT NOT NULL DEFAULT '',
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

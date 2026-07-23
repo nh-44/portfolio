@@ -1,11 +1,7 @@
 import React from 'react';
-import { ArrowUp, Code2 } from 'lucide-react';
+import { Code2 } from 'lucide-react';
 
 export default function Footer({ settings }) {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   const footerText = settings?.footer_text || `© ${new Date().getFullYear()} Naveen S. All rights reserved.`;
   const name = settings?.hero_heading || 'Naveen';
 
@@ -26,13 +22,13 @@ export default function Footer({ settings }) {
             </span>
           </div>
 
-          {/* Socials & Top Trigger */}
+          {/* Socials */}
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-4 text-xs font-mono text-slate-400">
               {socials.github && (
                 <a
                   href={socials.github}
-                  target="https://github.com/nh-44/"
+                  target="_blank"
                   rel="noreferrer"
                   className="hover:text-accent transition-colors"
                 >
@@ -42,7 +38,7 @@ export default function Footer({ settings }) {
               {socials.linkedin && (
                 <a
                   href={socials.linkedin}
-                  target="https://www.linkedin.com/in/nh44/"
+                  target="_blank"
                   rel="noreferrer"
                   className="hover:text-accent transition-colors"
                 >
@@ -50,15 +46,6 @@ export default function Footer({ settings }) {
                 </a>
               )}
             </div>
-
-            <button
-              onClick={scrollToTop}
-              className="p-2.5 rounded-xl bg-slate-900 border border-white/10 text-slate-400 hover:text-white transition-all flex items-center gap-1.5 text-xs font-mono"
-              aria-label="Scroll to top"
-            >
-              <span>Top</span>
-              <ArrowUp className="w-3.5 h-3.5 text-accent" />
-            </button>
           </div>
         </div>
       </div>

@@ -76,7 +76,7 @@ const seed = async () => {
       "© 2026 Naveen S. Built with precision and growth.",
       "Naveen S — Software Engineer & Machine Learning",
       "Personal digital headquarters and portfolio of Naveen S. Showcasing software architecture, GenAI pipelines, and robotics navigation stacks.",
-      "#94A3B8", // Steel Grey / Tactical Slate Accent
+      "#EAB308", // Gotham Gold Accent
       "https://res.cloudinary.com/demo/image/upload/v1234567890/favicon.ico",
       process.env.GOOGLE_CLIENT_ID || ''
     ];
