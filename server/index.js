@@ -175,6 +175,10 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Internal Server Error. Please try again later.' });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT} in ${process.env.NODE_ENV || 'development'} mode.`);
-});
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT} in ${process.env.NODE_ENV || 'development'} mode.`);
+  });
+}
+
+export default app;
