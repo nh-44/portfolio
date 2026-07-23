@@ -133,7 +133,7 @@ export default function Hero({ settings, onOpenTerminal }) {
                 <span className="hidden sm:inline">GitHub</span>
               </a>
               <a
-                href={socials.linkedin || "https://www.linkedin.com/in/nh44/"}
+                href={socials.linkedin || "https://www.linkedin.com/in/nh-44/"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2.5 rounded-xl bg-slate-900/90 border border-white/10 text-slate-300 hover:text-accent hover:border-accent/40 hover:bg-slate-850 transition-all flex items-center gap-2 text-xs font-mono group"

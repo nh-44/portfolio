@@ -11,6 +11,7 @@ import BatLogo from './BatLogo';
 import TelemetryChart from './TelemetryChart';
 import Beams from './Beams';
 import Antigravity from './Antigravity';
+import Footer from './Footer';
 
 export default function ConsoleLayout({ children, settings, onOpenTerminal }) {
   const location = useLocation();
@@ -218,7 +219,7 @@ export default function ConsoleLayout({ children, settings, onOpenTerminal }) {
       {/* Workspace Folders tree */}
       <div className="flex-grow overflow-y-auto py-4 px-2 space-y-1.5 text-xs text-slate-400 overscroll-contain" data-lenis-prevent>
         <div className="flex items-center gap-1.5 px-2 text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-2">
-          <span>PROJECT_ROOT / naveen-hq</span>
+          <span>PROJECT_ROOT / nh-44</span>
         </div>
 
         {/* Dynamic folders */}
@@ -248,8 +249,8 @@ export default function ConsoleLayout({ children, settings, onOpenTerminal }) {
                       key={item.path}
                       onClick={() => handleNav(item.path)}
                       className={`flex items-center justify-between py-1.5 px-2.5 rounded-lg cursor-pointer transition-all ${location.pathname === item.path || (item.path !== '/' && location.pathname.startsWith(item.path))
-                          ? 'bg-accent/10 border-l-2 border-accent text-white font-medium pl-2'
-                          : 'hover:bg-white/5 text-slate-400 hover:text-slate-200'
+                        ? 'bg-accent/10 border-l-2 border-accent text-white font-medium pl-2'
+                        : 'hover:bg-white/5 text-slate-400 hover:text-slate-200'
                         }`}
                     >
                       <div className="flex items-center gap-2">
@@ -287,7 +288,7 @@ export default function ConsoleLayout({ children, settings, onOpenTerminal }) {
           <div className="flex items-center gap-2" onClick={() => handleNav('/')}>
             <BatLogo className="w-10 h-5 text-accent hover:brightness-110 cursor-pointer transition-all" />
             <span className="text-xs font-mono font-bold text-slate-300 hidden sm:inline-block">
-              workspace: /naveen-hq
+              workspace: /nh-44
             </span>
           </div>
         </div>
@@ -341,8 +342,8 @@ export default function ConsoleLayout({ children, settings, onOpenTerminal }) {
                   key={item.path}
                   onClick={() => handleNav(item.path)}
                   className={`h-full flex items-center gap-2.5 px-4 border-r border-white/5 text-xs font-mono transition-all relative cursor-pointer border-t ${isTabActive
-                      ? 'bg-[#050507] text-white border-t-accent font-semibold'
-                      : 'text-slate-400 hover:text-slate-200 bg-[#09090C]/50 hover:bg-[#09090C]/80 border-t-transparent'
+                    ? 'bg-[#050507] text-white border-t-accent font-semibold'
+                    : 'text-slate-400 hover:text-slate-200 bg-[#09090C]/50 hover:bg-[#09090C]/80 border-t-transparent'
                     }`}
                 >
                   {item.type === 'code' && <FileCode className="w-3.5 h-3.5 text-sky-400" />}
@@ -387,8 +388,8 @@ export default function ConsoleLayout({ children, settings, onOpenTerminal }) {
             </div>
 
             {/* Main Content viewport with Framer Motion slide-fade reveals */}
-            <div className="flex-grow overflow-y-auto px-4 sm:px-8 py-8 relative h-full z-10" data-lenis-prevent>
-              <div className="max-w-5xl mx-auto pb-16">
+            <div className="flex-grow overflow-y-auto px-4 sm:px-8 py-8 relative h-full z-10 flex flex-col justify-between" data-lenis-prevent>
+              <div className="max-w-5xl mx-auto pb-16 w-full flex-grow flex flex-col justify-between">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={location.pathname}
@@ -396,11 +397,13 @@ export default function ConsoleLayout({ children, settings, onOpenTerminal }) {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
                     transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-                    className="w-full"
+                    className="w-full flex-grow"
                   >
                     {children}
                   </motion.div>
                 </AnimatePresence>
+
+                <Footer settings={settings} />
               </div>
             </div>
           </div>
@@ -499,16 +502,19 @@ export default function ConsoleLayout({ children, settings, onOpenTerminal }) {
             {/* System Accent Switcher */}
             <div className="bg-[#0C0C0F] border border-white/5 p-3 rounded-xl">
               <div className="text-[9px] text-slate-500 mb-2 font-bold">ACCENT THEME</div>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-5 gap-1.5">
                 {[
+                  { name: 'cyan', hex: '#06B6D4' },
                   { name: 'steel', hex: '#94A3B8' },
                   { name: 'gold', hex: '#EAB308' },
-                  { name: 'blue', hex: '#2563EB' }
+                  { name: 'blue', hex: '#2563EB' },
+                  { name: 'red', hex: '#EF4444' }
                 ].map((c) => (
                   <button
                     key={c.name}
                     onClick={() => handleAccentChange(c.hex)}
-                    className="p-1 rounded bg-[#131318] hover:bg-white/5 border border-white/5 text-[9px] text-center uppercase font-bold hover:text-white transition-colors"
+                    className="p-1 rounded bg-[#131318] hover:bg-white/5 border border-white/5 text-[8px] text-center uppercase font-bold hover:text-white transition-colors"
+                    title={`Switch to ${c.name} accent`}
                   >
                     <span className="block w-2.5 h-2.5 rounded-full mx-auto mb-1 border border-white/10" style={{ backgroundColor: c.hex }} />
                     {c.name}

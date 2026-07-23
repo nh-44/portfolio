@@ -4,8 +4,8 @@
 @import "@fontsource-variable/geist";
 
 :root {
-  --accent: #94A3B8; /* Steel Grey / Tactical Slate Metallic Accent */
-  --accent-glow: rgba(148, 163, 184, 0.15);
+  --accent: #06B6D4; /* Cyber Cyan Electric Accent */
+  --accent-glow: rgba(6, 182, 212, 0.18);
 }
 
 @tailwind base;

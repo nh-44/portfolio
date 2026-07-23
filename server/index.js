@@ -58,11 +58,22 @@ app.use('/api/certifications', certificationsRoutes);
 app.use('/api/skills', skillsRoutes);
 app.use('/api/publications', publicationsRoutes);
 
-// Contact message handler
+// Contact message handler (Saves to DB & sends SMTP email)
 app.post('/api/contact', async (req, res) => {
   const { name, email, subject, message } = req.body;
   if (!name || !email || !message) {
     return res.status(400).json({ error: 'Name, email, and message are required fields.' });
+  }
+
+  try {
+    const { query } = await import('./db.js');
+    await query(
+      `INSERT INTO messages (name, email, subject, message) VALUES ($1, $2, $3, $4)`,
+      [name, email, subject || 'No Subject', message]
+    );
+    console.log(`[DB] Saved contact message from ${name} (${email})`);
+  } catch (dbErr) {
+    console.error('[DB ERROR] Failed to save message:', dbErr);
   }
 
   // Print contact message to server log
@@ -78,7 +89,7 @@ Message: ${message}
       const transporter = nodemailer.createTransport({
         host: process.env.SMTP_HOST || 'smtp.gmail.com',
         port: parseInt(process.env.SMTP_PORT || '587'),
-        secure: process.env.SMTP_SECURE === 'true', // true for 465, false for 587
+        secure: process.env.SMTP_SECURE === 'true',
         auth: {
           user: process.env.SMTP_USER,
           pass: process.env.SMTP_PASS
@@ -93,7 +104,7 @@ Message: ${message}
         text: `Name: ${name}\nEmail: ${email}\nSubject: ${subject || 'No Subject'}\n\nMessage:\n${message}`,
         html: `
           <div style="font-family: sans-serif; max-width: 600px; border: 1px solid #1f2937; border-radius: 8px; padding: 20px; background-color: #0b0f19; color: #f3f4f6;">
-            <h2 style="color: #eab308; border-bottom: 1px solid #1f2937; padding-bottom: 10px;">New Message from Portfolio</h2>
+            <h2 style="color: #06b6d4; border-bottom: 1px solid #1f2937; padding-bottom: 10px;">New Message from Portfolio</h2>
             <p><strong>Name:</strong> ${name}</p>
             <p><strong>Email:</strong> ${email}</p>
             <p><strong>Subject:</strong> ${subject || 'No Subject'}</p>
@@ -113,6 +124,31 @@ Message: ${message}
   }
 
   return res.json({ success: true, message: 'Message sent successfully! Thank you.' });
+});
+
+// GET /api/contact/messages - Fetch all received messages for Admin Studio
+app.get('/api/contact/messages', async (req, res) => {
+  try {
+    const { query } = await import('./db.js');
+    const result = await query(`SELECT * FROM messages ORDER BY created_at DESC`);
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Error fetching messages:', err);
+    res.status(500).json({ error: 'Failed to fetch messages.' });
+  }
+});
+
+// DELETE /api/contact/messages/:id - Delete a message by ID
+app.delete('/api/contact/messages/:id', async (req, res) => {
+  try {
+    const { query } = await import('./db.js');
+    const { id } = req.params;
+    await query(`DELETE FROM messages WHERE id = $1`, [id]);
+    res.json({ success: true, message: 'Message deleted.' });
+  } catch (err) {
+    console.error('Error deleting message:', err);
+    res.status(500).json({ error: 'Failed to delete message.' });
+  }
 });
 
 // Serve frontend static build files in production

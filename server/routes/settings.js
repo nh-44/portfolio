@@ -31,7 +31,7 @@ const getOrInitSettings = async () => {
     "© 2026 Naveen S. All rights reserved.",
     "Naveen S — Software Engineer & AI Specialist",
     "Personal portfolio and digital headquarters of Naveen S, Software Engineer specializing in Document Intelligence, GenAI, and Backend Systems.",
-    "#94A3B8",
+    "#06B6D4",
     ""
   ];
 

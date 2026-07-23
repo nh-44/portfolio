@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import confetti from 'canvas-confetti';
 import { api } from '../utils/api';
 import {
   Settings,
@@ -20,7 +22,9 @@ import {
   Eye,
   ShieldCheck,
   Cpu,
-  Award
+  Award,
+  Mail,
+  MessageSquare
 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
@@ -75,8 +79,44 @@ export default function AdminDashboard({ onSettingsUpdated, onResumeUpdated }) {
   const [uploading, setUploading] = useState(false);
   const [copiedId, setCopiedId] = useState('');
 
-  // Direct file uploads to Cloudinary for individual fields
-  const [uploadingField, setUploadingField] = useState(null);
+  // Messages Inbox state
+  const [messages, setMessages] = useState([]);
+  const [toastMessage, setToastMessage] = useState(null);
+
+  const triggerSuccessFeedback = (msg = "Operation completed successfully!") => {
+    try {
+      confetti({
+        particleCount: 85,
+        spread: 75,
+        origin: { y: 0.6 }
+      });
+    } catch (e) {}
+
+    setToastMessage(msg);
+    setTimeout(() => {
+      setToastMessage(null);
+    }, 4500);
+  };
+
+  const fetchMessages = async () => {
+    try {
+      const data = await api.get('/api/contact/messages');
+      setMessages(data);
+    } catch (e) {
+      console.error('Failed to load contact messages:', e);
+    }
+  };
+
+  const handleDeleteMessage = async (id) => {
+    if (!window.confirm('Delete this contact message?')) return;
+    try {
+      await api.delete(`/api/contact/messages/${id}`);
+      setMessages(messages.filter(m => m.id !== id));
+      triggerSuccessFeedback("Message deleted from Inbox!");
+    } catch (err) {
+      alert(err.message || 'Failed to delete message.');
+    }
+  };
 
   const handleDirectUpload = async (file, folder, onComplete) => {
     if (!file) return;
@@ -322,7 +362,7 @@ export default function AdminDashboard({ onSettingsUpdated, onResumeUpdated }) {
     try {
       const updated = await api.put('/api/settings', settingsForm);
       setSettingsForm(updated);
-      alert('Settings updated successfully!');
+      triggerSuccessFeedback('Site Settings updated successfully!');
       if (onSettingsUpdated) onSettingsUpdated();
     } catch (err) {
       alert(err.message);
@@ -337,7 +377,7 @@ export default function AdminDashboard({ onSettingsUpdated, onResumeUpdated }) {
     try {
       const updated = await api.put('/api/settings/resume', resumeForm);
       setResumeForm(updated);
-      alert('Resume url updated successfully!');
+      triggerSuccessFeedback('Resume URL updated successfully!');
       if (onResumeUpdated) onResumeUpdated();
     } catch (err) {
       alert(err.message);
@@ -390,9 +430,11 @@ export default function AdminDashboard({ onSettingsUpdated, onResumeUpdated }) {
       if (editingProject === 'new') {
         const added = await api.post('/api/projects', body);
         setProjects([added, ...projects]);
+        triggerSuccessFeedback('New Case Study created successfully!');
       } else {
         const updated = await api.put(`/api/projects/${editingProject}`, body);
         setProjects(projects.map(p => p.id === editingProject ? updated : p));
+        triggerSuccessFeedback('Case Study updated successfully!');
       }
       setEditingProject(null);
     } catch (err) {
@@ -405,6 +447,7 @@ export default function AdminDashboard({ onSettingsUpdated, onResumeUpdated }) {
     try {
       await api.delete(`/api/projects/${id}`);
       setProjects(projects.filter(p => p.id !== id));
+      triggerSuccessFeedback('Case Study deleted successfully!');
     } catch (err) {
       alert(err.message);
     }
@@ -842,8 +885,28 @@ export default function AdminDashboard({ onSettingsUpdated, onResumeUpdated }) {
   // Dashboard admin layout
   return (
     <section className="py-24 min-h-screen relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         
+        {/* Success Toast Banner & Confetti Notification */}
+        <AnimatePresence>
+          {toastMessage && (
+            <motion.div
+              initial={{ opacity: 0, y: -20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.95 }}
+              className="fixed top-6 right-6 z-50 bg-slate-900 border border-emerald-500/40 text-emerald-400 px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 font-mono text-xs backdrop-blur-md"
+            >
+              <div className="p-1.5 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                <CheckCircle className="w-4 h-4" />
+              </div>
+              <div>
+                <div className="font-bold text-white text-xs">Action Completed!</div>
+                <div className="text-[11px] text-slate-300">{toastMessage}</div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* Dashboard Top Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-6 border-b border-white/5 mb-10">
           <div>
@@ -870,6 +933,7 @@ export default function AdminDashboard({ onSettingsUpdated, onResumeUpdated }) {
           {/* Side Menu Navigation */}
           <nav className="lg:col-span-3 flex flex-row lg:flex-col flex-wrap gap-1.5 p-1 bg-slate-950/60 lg:p-2 rounded-2xl border border-white/5 backdrop-blur">
             {[
+              { id: 'messages', label: 'Inbox', icon: Mail, badge: messages.length },
               { id: 'settings', label: 'Settings', icon: Settings },
               { id: 'resume', label: 'Resume', icon: FileText },
               { id: 'projects', label: 'Projects', icon: Code },
@@ -886,18 +950,28 @@ export default function AdminDashboard({ onSettingsUpdated, onResumeUpdated }) {
                   key={btn.id}
                   onClick={() => {
                     setActiveTab(btn.id);
+                    if (btn.id === 'messages') fetchMessages();
                     setEditingProject(null);
                     setEditingMilestone(null);
                     setEditingBlog(null);
                   }}
-                  className={`flex-grow lg:flex-grow-0 flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs font-mono transition-all ${
+                  className={`flex-grow lg:flex-grow-0 flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-mono transition-all ${
                     activeTab === btn.id
-                      ? 'bg-accent text-white font-bold shadow-md shadow-accent/20'
+                      ? 'bg-accent text-slate-950 font-bold shadow-md'
                       : 'text-slate-400 hover:text-white hover:bg-white/5'
                   }`}
                 >
-                  <Icon className="w-4 h-4 shrink-0" />
-                  <span>{btn.label}</span>
+                  <div className="flex items-center gap-2.5">
+                    <Icon className="w-4 h-4 shrink-0" />
+                    <span>{btn.label}</span>
+                  </div>
+                  {btn.badge !== undefined && btn.badge > 0 && (
+                    <span className={`px-1.5 py-0.5 rounded-full text-[9px] font-bold ${
+                      activeTab === btn.id ? 'bg-slate-950 text-accent' : 'bg-accent text-slate-950'
+                    }`}>
+                      {btn.badge}
+                    </span>
+                  )}
                 </button>
               );
             })}
@@ -906,6 +980,78 @@ export default function AdminDashboard({ onSettingsUpdated, onResumeUpdated }) {
           {/* Main Workspace Column */}
           <div className="lg:col-span-9 glass-panel rounded-3xl p-6 sm:p-8 border border-white/5">
             
+            {/* 0. MESSAGES / INBOX TAB */}
+            {activeTab === 'messages' && (
+              <div className="space-y-6">
+                <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/5 pb-4">
+                  <div>
+                    <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                      <Mail className="w-5 h-5 text-accent" />
+                      <span>CONTACT FORM INBOX</span>
+                    </h2>
+                    <p className="text-xs text-slate-400 font-mono mt-1">
+                      Review messages, inquiries, and roles submitted through your portfolio contact page.
+                    </p>
+                  </div>
+                  <button
+                    onClick={fetchMessages}
+                    className="px-3.5 py-2 rounded-xl bg-slate-900 border border-white/10 hover:border-accent/40 text-xs font-mono text-slate-300 hover:text-white transition-all flex items-center gap-2"
+                  >
+                    <span>Refresh Inbox</span>
+                  </button>
+                </div>
+
+                {messages.length === 0 ? (
+                  <div className="p-12 text-center border border-white/5 rounded-3xl bg-slate-950/40 text-slate-500 font-mono text-xs">
+                    <Mail className="w-8 h-8 text-slate-600 mx-auto mb-3 animate-pulse" />
+                    <p>No contact messages received yet. Your inbox is clear!</p>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {messages.map((msg) => (
+                      <div key={msg.id} className="p-5 rounded-2xl bg-slate-950/90 border border-white/10 hover:border-accent/30 transition-all font-mono space-y-3">
+                        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/5 pb-3">
+                          <div>
+                            <span className="text-sm font-bold text-white block">{msg.name}</span>
+                            <a href={`mailto:${msg.email}`} className="text-xs text-accent hover:underline flex items-center gap-1 mt-0.5">
+                              <span>{msg.email}</span>
+                            </a>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <span className="text-[10px] text-slate-500">
+                              {new Date(msg.created_at).toLocaleString()}
+                            </span>
+                            <a
+                              href={`mailto:${msg.email}?subject=Re: ${encodeURIComponent(msg.subject || 'Portfolio Inquiry')}`}
+                              className="px-3 py-1.5 rounded-lg bg-accent/20 border border-accent/30 text-accent hover:bg-accent hover:text-slate-950 transition-all text-xs font-bold"
+                            >
+                              Reply
+                            </a>
+                            <button
+                              onClick={() => handleDeleteMessage(msg.id)}
+                              className="p-1.5 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 hover:bg-rose-500 hover:text-white transition-all"
+                              title="Delete message"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                        </div>
+
+                        <div className="text-xs text-slate-400">
+                          <span className="text-slate-500 font-semibold block text-[10px] uppercase mb-1">Subject:</span>
+                          <span className="text-slate-200 font-semibold">{msg.subject || 'No Subject'}</span>
+                        </div>
+
+                        <div className="bg-slate-900/60 p-4 rounded-xl border border-white/5 text-xs text-slate-300 whitespace-pre-wrap leading-relaxed">
+                          {msg.message}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* 1. SETTINGS TAB */}
             {activeTab === 'settings' && (
               <form onSubmit={handleSettingsSubmit} className="space-y-6">
