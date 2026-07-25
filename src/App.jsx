@@ -18,6 +18,7 @@ import ContactPage from './pages/ContactPage';
 import AdminDashboard from './pages/AdminDashboard';
 import GithubPage from './pages/GithubPage';
 import PublicationsPage from './pages/PublicationsPage';
+import CertificationsPage from './pages/CertificationsPage';
 import useSmoothScroll from './hooks/useSmoothScroll';
 
 export default function App() {
@@ -109,6 +110,7 @@ export default function App() {
             <Route path="/projects" element={<ProjectsPage />} />
             <Route path="/projects/:slug" element={<ProjectDetail />} />
             <Route path="/resume" element={<ResumePage resumeUrl={resumeUrl} />} />
+            <Route path="/certifications" element={<CertificationsPage />} />
             <Route path="/publications" element={<PublicationsPage />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:slug" element={<BlogDetail />} />
