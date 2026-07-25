@@ -3,6 +3,7 @@ import pg from 'pg';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import readline from 'readline';
 
 dotenv.config();
 
@@ -20,7 +21,29 @@ const pool = new Pool({
   }
 });
 
+const askQuestion = (query) => {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
+  return new Promise((resolve) => rl.question(query, (ans) => {
+    rl.close();
+    resolve(ans);
+  }));
+};
+
 const seed = async () => {
+  // Add a safety check: warn the user about database truncation
+  if (!process.argv.includes('--force')) {
+    console.warn("⚠️ WARNING: Seeding will TRUNCATE (completely erase) your active portfolio database!");
+    console.log(`Target Database: ${process.env.DATABASE_URL.split('@').pop().split('?')[0]}`);
+    const answer = await askQuestion("Are you sure you want to proceed? (yes/no): ");
+    if (answer.toLowerCase() !== 'yes') {
+      console.log("Seeding aborted. Database remains untouched.");
+      process.exit(0);
+    }
+  }
+
   const client = await pool.connect();
   try {
     console.log("Starting database seeding with Naveen's resume profile...");

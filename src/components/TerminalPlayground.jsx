@@ -16,6 +16,7 @@ export default function TerminalPlayground({ isOpen, onClose, settings }) {
   const [cmdHistory, setCmdHistory] = useState([]);
   const [historyPointer, setHistoryPointer] = useState(-1);
   const [projectsList, setProjectsList] = useState([]);
+  const [skillsList, setSkillsList] = useState([]);
 
   const bottomRef = useRef(null);
   const inputRef = useRef(null);
@@ -45,11 +46,52 @@ export default function TerminalPlayground({ isOpen, onClose, settings }) {
     fetchProjects();
   }, []);
 
+  // Fetch skills categories list for dynamic technical stack breakdown
+  useEffect(() => {
+    const fetchSkills = async () => {
+      try {
+        const data = await api.get('/api/skills/categories');
+        if (Array.isArray(data)) {
+          setSkillsList(data);
+        }
+      } catch (err) {
+        console.error('Error loading terminal skills list:', err);
+      }
+    };
+    fetchSkills();
+  }, []);
+
   // Dynamic values
   const ownerName = settings?.hero_heading || 'Naveen S';
   const about = settings?.about_text || 'Software Engineer-in-Training with experience in backend systems, document intelligence, applied machine learning, and GenAI tooling.';
   const email = settings?.email || 'naveenselvaraj.selva@gmail.com';
   const location = settings?.location || 'Bengaluru, India';
+
+  // Parse dossierData
+  let dossierData = {
+    status: "Available for Internships",
+    location: "Bangalore, India",
+    education: "B.Tech CSE",
+    graduation: "2027",
+    currentMission: "Building PatentEase",
+    specialization: ["AI", "Backend", "Cloud"],
+    openTo: ["SDE", "AI Engineer", "Backend Engineer"],
+    stats: {
+      projects: "15+",
+      leadershipRoles: "3",
+      hackathons: "8",
+      teamsLed: "35+",
+      researchProjects: "2"
+    }
+  };
+
+  let rawD = settings?.dossier;
+  if (rawD) {
+    if (typeof rawD === 'object') dossierData = { ...dossierData, ...rawD };
+    else if (typeof rawD === 'string') {
+      try { dossierData = { ...dossierData, ...JSON.parse(rawD) }; } catch (e) {}
+    }
+  }
 
   const commandsHelpText = `Available Console Commands:
   whoami          Professional profile & background
@@ -72,32 +114,41 @@ export default function TerminalPlayground({ isOpen, onClose, settings }) {
   clear           Clear terminal output
   help            Show command menu`;
 
+  // Dynamically compile skills list string
+  const compileSkillsText = () => {
+    if (skillsList.length === 0) {
+      return `Technical Stack Breakdown:
+Frontend : React, Next.js, TypeScript, Tailwind CSS, Framer Motion, Three.js
+Backend  : Node.js, Express, Python, PostgreSQL, Redis, REST APIs
+AI/Cloud : Gemini API, LangChain, Vector Databases, GCP, Docker, CI/CD
+ML : Transformers , Explainable AI 
+Database : MongoDB , Neon Postgres , Supabase , MySQL`;
+    }
+    return `Technical Stack Breakdown:\n` + 
+      skillsList.map(cat => `${cat.category.padEnd(24)}: ${cat.items ? cat.items.map(item => item.name || item[0]).join(', ') : ''}`).join('\n');
+  };
+
   const commands = {
     help: commandsHelpText,
 
     whoami: `${ownerName} | Software Engineer
 Location : ${location}
-Focus    : Full Stack Systems, LLM Pipelines, AI Agents & Robotics
+Focus    : ${(Array.isArray(dossierData.specialization) ? dossierData.specialization : [dossierData.specialization]).join(', ')}
 About    : ${about}`,
 
-    skills: `Technical Stack Breakdown:
-Frontend : React, Next.js, TypeScript, Tailwind CSS, Framer Motion, Three.js
-Backend  : Node.js, Express, Python, PostgreSQL, Redis, REST APIs
-AI/Cloud : Gemini API, LangChain, Vector Databases, GCP, Docker, CI/CD
-ML : Transformers , Explainable AI 
-Database : MongoDB , Neon Postgres , Supabase , MySQL`,
-
+    skills: compileSkillsText(),
 
     exp: `Experience & Leadership Highlights:
-• Full Stack & AI Engineer - PatentEase & AI Projects (2024 - Present)
-  - Engineered end-to-end automated LLM patent drafting & prior-art retrieval.
-• Teams Led: 35+ members across hackathons & innovation initiatives.
-• Research Projects: 2 IEEE-oriented publication papers.`,
+• Current Mission: ${dossierData.currentMission}
+• Projects: ${dossierData.stats?.projects || '15+'}
+• Leadership Roles: ${dossierData.stats?.leadershipRoles || '3'}
+• Hackathons Completed: ${dossierData.stats?.hackathons || '8'}
+• Research Projects: ${dossierData.stats?.researchProjects || '2'}`,
 
     edu: `Academic Background:
-    Degree    : B.Tech in Computer Science & Engineering
-    Location  : Bangalore, India
-    Graduation: 2027`,
+    Degree    : ${dossierData.education}
+    Location  : ${dossierData.location}
+    Graduation: ${dossierData.graduation}`,
 
     pwd: `/workspace/nh44-cave`,
 
