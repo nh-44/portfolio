@@ -93,9 +93,8 @@ export default function ConsoleLayout({ children, settings, onOpenTerminal }) {
     overview: true,
     timeline: true,
     archive: true,
-    journal: true,
+    literature: true,
     credentials: true,
-    integrations: true,
     terminal: true,
   });
 
@@ -156,11 +155,10 @@ export default function ConsoleLayout({ children, settings, onOpenTerminal }) {
     { name: 'Home.jsx', path: '/', folder: 'overview', type: 'code', gitStatus: 'M' },
     { name: 'Journey.md', path: '/journey', folder: 'timeline', type: 'text', gitStatus: 'U' },
     { name: 'Projects.json', path: '/projects', folder: 'archive', type: 'code', gitStatus: '🟢' },
-    { name: 'Blog.md', path: '/blog', folder: 'journal', type: 'text', gitStatus: 'U' },
+    { name: 'Blog.md', path: '/blog', folder: 'literature', type: 'text', gitStatus: 'U' },
+    { name: 'Publications.json', path: '/publications', folder: 'literature', type: 'code', gitStatus: '✓' },
     { name: 'Resume.pdf', path: '/resume', folder: 'credentials', type: 'text', gitStatus: '✓' },
     { name: 'Certificates.json', path: '/certifications', folder: 'credentials', type: 'code', gitStatus: '✓' },
-    { name: 'Github.json', path: '/github', folder: 'integrations', type: 'code', gitStatus: '✓' },
-    { name: 'Publications.json', path: '/publications', folder: 'integrations', type: 'code', gitStatus: '✓' },
     { name: 'Contact.sh', path: '/contact', folder: 'terminal', type: 'shell', gitStatus: '⚡' }
   ];
 

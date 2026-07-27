@@ -16,7 +16,6 @@ import BlogPage from './pages/BlogPage';
 import BlogDetail from './pages/BlogDetail';
 import ContactPage from './pages/ContactPage';
 import AdminDashboard from './pages/AdminDashboard';
-import GithubPage from './pages/GithubPage';
 import PublicationsPage from './pages/PublicationsPage';
 import CertificationsPage from './pages/CertificationsPage';
 import useSmoothScroll from './hooks/useSmoothScroll';
@@ -105,7 +104,6 @@ export default function App() {
         >
           <Routes>
             <Route path="/" element={<Home settings={settings} onOpenTerminal={() => setTerminalOpen(true)} />} />
-            <Route path="/github" element={<GithubPage settings={settings} />} />
             <Route path="/journey" element={<JourneyPage />} />
             <Route path="/projects" element={<ProjectsPage />} />
             <Route path="/projects/:slug" element={<ProjectDetail />} />

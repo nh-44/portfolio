@@ -91,29 +91,22 @@ export default function ProjectsPage() {
             No projects found matching the filter criteria.
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[auto]">
+          <div className="flex flex-col gap-8 max-w-4xl mx-auto animate-fadeIn">
             {filteredProjects.map((project, idx) => {
-              const isFeatured = project.featured;
-              const cardSpan = isFeatured ? 'lg:col-span-2 md:col-span-2' : 'col-span-1';
-
               return (
                 <motion.div
                   key={project.id}
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: idx * 0.05 }}
-                  className={`h-full flex w-full group ${cardSpan}`}
+                  className="w-full group"
                 >
-                  <SpotlightCard className="p-0 sm:p-0 overflow-hidden h-full w-full flex flex-col border-white/5 bg-[#0C0C0E]/50">
-                    <div className={`h-full flex flex-col ${isFeatured ? 'lg:flex-row' : ''}`}>
+                  <SpotlightCard className="p-0 sm:p-0 overflow-hidden w-full border-white/5 bg-[#0C0C0E]/50">
+                    <div className="flex flex-col md:flex-row min-h-[220px]">
                       {/* Cover Image Container */}
                       <Link
                         to={`/projects/${project.slug}`}
-                        className={`block relative overflow-hidden bg-slate-900 border-b border-white/5 shrink-0 ${
-                          isFeatured 
-                            ? 'h-48 lg:h-auto lg:w-1/2 lg:border-b-0 lg:border-r' 
-                            : 'h-48'
-                        }`}
+                        className="block relative overflow-hidden bg-slate-900 border-b border-white/5 md:border-b-0 md:border-r shrink-0 h-48 md:h-auto md:w-[35%]"
                       >
                         {project.cover_image ? (
                           <img
@@ -135,7 +128,7 @@ export default function ProjectsPage() {
                       </Link>
 
                       {/* Card Content & Details */}
-                      <div className={`p-6 flex flex-col justify-between flex-grow ${isFeatured ? 'lg:w-1/2' : ''}`}>
+                      <div className="p-6 flex flex-col justify-between flex-grow md:w-[65%]">
                         <div>
                           <h3 className="text-lg sm:text-xl font-bold text-white mb-2 group-hover:text-accent transition-colors leading-snug">
                             <Link to={`/projects/${project.slug}`}>
@@ -143,14 +136,14 @@ export default function ProjectsPage() {
                             </Link>
                           </h3>
 
-                          <p className="text-slate-400 text-xs leading-relaxed mb-6 line-clamp-3 lg:line-clamp-4">
+                          <p className="text-slate-400 text-xs leading-relaxed mb-6 line-clamp-3">
                             {project.short_description}
                           </p>
 
                           {/* Tech Stack Badges */}
                           {project.tech_stack && project.tech_stack.length > 0 && (
                             <div className="flex flex-wrap gap-1.5 mb-4">
-                              {project.tech_stack.slice(0, isFeatured ? 6 : 4).map((tech, tIdx) => (
+                              {project.tech_stack.slice(0, 6).map((tech, tIdx) => (
                                 <span
                                   key={tIdx}
                                   className="px-2.5 py-0.5 rounded-lg bg-slate-900 text-[10px] font-mono border border-white/5 text-slate-300"
@@ -158,9 +151,9 @@ export default function ProjectsPage() {
                                   {tech}
                                 </span>
                               ))}
-                              {project.tech_stack.length > (isFeatured ? 6 : 4) && (
+                              {project.tech_stack.length > 6 && (
                                 <span className="px-2 py-0.5 text-[9px] font-mono text-slate-500">
-                                  +{project.tech_stack.length - (isFeatured ? 6 : 4)} more
+                                  +{project.tech_stack.length - 6} more
                                 </span>
                               )}
                             </div>

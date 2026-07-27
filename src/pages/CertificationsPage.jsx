@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  ShieldCheck, Cloud, Server, Cpu, Award, 
-  ExternalLink, FileText, ArrowRight 
+import {
+  ShieldCheck, Cloud, Server, Cpu, Award,
+  ExternalLink, FileText, ArrowRight
 } from 'lucide-react';
 import { api } from '../utils/api';
 import SpotlightCard from '../components/SpotlightCard';
@@ -60,7 +60,7 @@ export default function CertificationsPage() {
         <div className="flex flex-col items-center text-center mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent text-xs font-mono mb-3">
             <ShieldCheck className="w-3.5 h-3.5" />
-            <span>VERIFIED ACADEMIC & CLOUD CREDENTIALS</span>
+            <span>VERIFIED CREDENTIALS AND BADGES</span>
           </div>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
             Certifications & <span className="text-gradient">Badges</span>
@@ -88,28 +88,28 @@ export default function CertificationsPage() {
                 <SpotlightCard className="bg-[#0C0C0E]/50 border-white/5 p-6 text-center flex flex-col justify-between w-full">
                   <div className="flex flex-col items-center">
                     {/* Badge Emblem frame */}
-                    <div 
+                    <div
                       className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 border relative overflow-hidden"
-                      style={{ 
+                      style={{
                         borderColor: `${cert.badge_color || '#EA4335'}33`,
-                        backgroundColor: `${cert.badge_color || '#EA4335'}0d` 
+                        backgroundColor: `${cert.badge_color || '#EA4335'}0d`
                       }}
                     >
-                      <div 
+                      <div
                         className="absolute inset-0.5 rounded-[14px] opacity-15 blur-sm"
                         style={{ backgroundColor: cert.badge_color || '#EA4335' }}
                       />
                       {cert.badge_image_url ? (
-                        <img 
-                          src={cert.badge_image_url} 
-                          alt="" 
-                          className="w-full h-full object-cover relative z-10" 
+                        <img
+                          src={cert.badge_image_url}
+                          alt=""
+                          className="w-full h-full object-cover relative z-10"
                         />
                       ) : (
                         getBadgeIcon(cert.type)
                       )}
                     </div>
-                    
+
                     <h4 className="text-sm font-bold text-white mb-1.5 leading-snug tracking-tight">
                       {cert.title}
                     </h4>
@@ -122,7 +122,7 @@ export default function CertificationsPage() {
                     <span className="text-slate-500">{cert.date}</span>
                     <div className="flex items-center gap-3">
                       {cert.certificate_pdf_url && (
-                        <a 
+                        <a
                           href={cert.certificate_pdf_url}
                           target="_blank"
                           rel="noopener noreferrer"
@@ -132,7 +132,7 @@ export default function CertificationsPage() {
                           <FileText className="w-3 h-3" />
                         </a>
                       )}
-                      <a 
+                      <a
                         href={cert.verification_url || '#'}
                         target="_blank"
                         rel="noopener noreferrer"

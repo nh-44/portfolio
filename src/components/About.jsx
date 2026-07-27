@@ -19,7 +19,7 @@ export default function About({ settings }) {
             <span>ABOUT Moi</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-            Engineering digital experiences with <span className="text-gradient">precision , vision and teamwork</span>
+            Engineering with <span className="text-gradient">precision , vision and teamwork</span>
           </h2>
         </div>
 

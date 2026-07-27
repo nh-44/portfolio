@@ -101,7 +101,7 @@ export default function TerminalPlayground({ isOpen, onClose, settings }) {
 
   projects        List all projects with IDs & serials
   open <id|num>   Open specific project case study
-  git             Open GitHub repositories section
+  publications    Open scientific publications & patents
 
   journey         Open career timeline & milestones
   blog            Open engineering articles & journal
@@ -155,9 +155,8 @@ About    : ${about}`,
     ls: `drwxr-xr-x  Overview/      -> Home.jsx
 drwxr-xr-x  Timeline/      -> Journey.md
 drwxr-xr-x  Archive/       -> Projects.json
-drwxr-xr-x  Journal/       -> Blog.md
-drwxr-xr-x  Credentials/   -> Resume.pdf
-drwxr-xr-x  Integrations/  -> Github.json & Publications.json`,
+drwxr-xr-x  Literature/    -> Blog.md & Publications.json
+drwxr-xr-x  Credentials/   -> Resume.pdf & Certificates.json`,
 
     tree: `nh44-cave/
 ├── Overview/
@@ -166,13 +165,12 @@ drwxr-xr-x  Integrations/  -> Github.json & Publications.json`,
 │   └── Journey.md
 ├── Archive/
 │   └── Projects.json
-├── Journal/
-│   └── Blog.md
-├── Credentials/
-│   └── Resume.pdf
-├── Integrations/
-│   ├── Github.json
+├── Literature/
+│   ├── Blog.md
 │   └── Publications.json
+├── Credentials/
+│   ├── Resume.pdf
+│   └── Certificates.json
 └── Terminal/
     └── Contact.sh`
   };
@@ -192,10 +190,10 @@ drwxr-xr-x  Integrations/  -> Github.json & Publications.json`,
         setHistory([]);
         setInput('');
         return;
-      } else if (lowerTrimmed === 'git') {
-        newHistory.push({ type: 'system', text: 'Opening GitHub repositories view...' });
+      } else if (lowerTrimmed === 'publications') {
+        newHistory.push({ type: 'system', text: 'Opening scientific publications...' });
         setHistory(newHistory);
-        setTimeout(() => { navigate('/github'); onClose(); }, 400);
+        setTimeout(() => { navigate('/publications'); onClose(); }, 400);
       } else if (lowerTrimmed === 'journey') {
         newHistory.push({ type: 'system', text: 'Opening career timeline...' });
         setHistory(newHistory);

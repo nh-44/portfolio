@@ -33,6 +33,17 @@ export default function ProjectDetail() {
     fetchProjectDetails();
   }, [slug]);
 
+  // Scroll viewport container back to top once loading is complete
+  useEffect(() => {
+    if (!loading) {
+      const scrollContainer = document.querySelector('[data-lenis-prevent]');
+      if (scrollContainer) {
+        scrollContainer.scrollTop = 0;
+      }
+      window.scrollTo(0, 0);
+    }
+  }, [loading]);
+
   // Dynamic Markdown Components Mapping for Premium Typography
   const markdownComponents = {
     h1: ({ node, ...props }) => <h1 className="text-3xl font-extrabold text-white mt-10 mb-5 border-b border-white/10 pb-3" {...props} />,
