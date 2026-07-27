@@ -1,4 +1,4 @@
-# Naveen S — Software Engineer & AI Architect Headquarters
+# Naveen S — Digital Headquarters
 
 > **Interactive Cyber-IDE Portfolio & Digital Command Center**  
 > Engineered with React 19, Vite, Express, PostgreSQL, Three.js, and Tailwind CSS.
@@ -7,7 +7,7 @@
 
 ## ⚡ Overview
 
-Welcome to the digital headquarters of **Naveen S** — Full Stack Engineer & AI Solutions Architect. Designed with an immersive, high-tech IDE interface inspired by modern code editors and tactical command consoles, this application delivers a seamless interactive developer portfolio, real-time status panel, interactive CLI terminal, and administrative management suite.
+Welcome to the digital headquarters of **Naveen S** . Designed with an immersive, high-tech IDE interface inspired by modern code editors and tactical command consoles, this application delivers a seamless interactive developer portfolio, real-time status panel, interactive CLI terminal, and administrative management suite.
 
 ---
 

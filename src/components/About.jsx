@@ -47,7 +47,7 @@ export default function About({ settings }) {
             </p>
 
             <p className="text-slate-400 leading-relaxed text-xs sm:text-sm">
-              My engineering philosophy is inspired by understanding the fundamentals and continuous improvement. I believe software engineering is a craft of compounding skills—constantly learning new things, seeking technical mastery, and shipping optimized code.
+              My engineering philosophy is understanding fundamentals first, then rebuilding for improvement. I've applied this across applied ML research, backend systems, and hands-on hackathon builds — published research at IEEE INDICON 2025, 1st place at Heal-O-Code, and ongoing work on post-quantum security for connected vehicles and PatentEase.
             </p>
           </div>
 
