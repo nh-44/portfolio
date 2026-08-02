@@ -16,7 +16,7 @@ export default function ResumePage({ resumeUrl }) {
   // Backend proxy download — guarantees correct filename + extension
   const getProxyDownloadUrl = (url) => {
     if (!url) return '#';
-    return `/api/media/download?url=${encodeURIComponent(url)}&filename=Resume_Naveen_S_GKN.pdf`;
+    return `/api/media/download?url=${encodeURIComponent(url)}&filename=Naveen_S_Resume.pdf`;
   };
 
   const handleRefresh = () => {

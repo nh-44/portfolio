@@ -3,6 +3,60 @@ import { useNavigate } from 'react-router-dom';
 import { Terminal, X, ArrowRight, CornerDownLeft, Sparkles, Folder, FileText } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { api } from '../utils/api';
+import { gameEngine } from './wayneSecGame';
+
+const MatrixRain = () => {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    
+    // Set size
+    canvas.width = canvas.parentElement?.clientWidth || 500;
+    canvas.height = 160;
+
+    const katakana = 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const alphabet = katakana.split('');
+
+    const fontSize = 11;
+    const columns = canvas.width / fontSize;
+
+    const rainDrops = [];
+    for (let x = 0; x < columns; x++) {
+      rainDrops[x] = 1;
+    }
+
+    let animationId;
+    const draw = () => {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = '#00ff66'; // Green text
+      ctx.font = fontSize + 'px monospace';
+
+      for (let i = 0; i < rainDrops.length; i++) {
+        const text = alphabet[Math.floor(Math.random() * alphabet.length)];
+        ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+        if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          rainDrops[i] = 0;
+        }
+        rainDrops[i]++;
+      }
+      animationId = requestAnimationFrame(draw);
+    };
+
+    draw();
+
+    return () => {
+      cancelAnimationFrame(animationId);
+    };
+  }, []);
+
+  return <canvas ref={canvasRef} className="block w-full bg-black rounded-xl border border-[#00ff66]/20 shadow-md shadow-[#00ff66]/5" />;
+};
 
 export default function TerminalPlayground({ isOpen, onClose, settings }) {
   const navigate = useNavigate();
@@ -17,6 +71,7 @@ export default function TerminalPlayground({ isOpen, onClose, settings }) {
   const [historyPointer, setHistoryPointer] = useState(-1);
   const [projectsList, setProjectsList] = useState([]);
   const [skillsList, setSkillsList] = useState([]);
+  const [terminalMode, setTerminalMode] = useState('normal'); // 'normal' or 'game'
 
   const bottomRef = useRef(null);
   const inputRef = useRef(null);
@@ -94,24 +149,24 @@ export default function TerminalPlayground({ isOpen, onClose, settings }) {
   }
 
   const commandsHelpText = `Available Console Commands:
-  whoami          Professional profile & background
-  skills          Technical stack breakdown
-  exp             Experience & leadership highlights
-  edu             Academic background (B.Tech CSE '27)
-
-  projects        List all projects with IDs & serials
-  open <id|num>   Open specific project case study
-  publications    Open scientific publications & patents
-
-  journey         Open career timeline & milestones
-  blog            Open engineering articles & journal
+  whoami          Short professional bio
   resume          Open interactive resume viewer
-  contact         Contact information & contact page
+  resume --download Download resume PDF
+  projects        List available project case studies
+  projects --open <slug> Inspect project detail
+  journey         Condensed career timeline
+  skills          Technical capabilities stack
+  achievements    Hackathon placements & IEEE publications
+  contact         Display interactive contact directory
+  paper           Details of IEEE XAI publication
+  play            Start the WAYNE_SEC Breach Protocol game
 
-  ls              List workspace directories
-  tree            Output portfolio file structure
-  pwd             Display current terminal path
-  clear           Clear terminal output
+  open <github|linkedin> Open profile link in a new tab
+  cd <dir>        Change directory / route page
+  ls              List directories (projects, journey, contact...)
+  tree            Output workspace folder tree
+  clear           Clear screen buffer
+  history         Show session command history
   help            Show command menu`;
 
   // Dynamically compile skills list string
@@ -128,22 +183,25 @@ Database : MongoDB , Neon Postgres , Supabase , MySQL`;
       skillsList.map(cat => `${cat.category.padEnd(24)}: ${cat.items ? cat.items.map(item => item.name || item[0]).join(', ') : ''}`).join('\n');
   };
 
+  const toggleThemeColor = () => {
+    const accentColors = ['#EAB308', '#10B981', '#3B82F6', '#EF4444']; // Gold, Emerald, Blue, Red
+    const currentAccent = localStorage.getItem('accent_color') || '#EAB308';
+    let nextIndex = accentColors.indexOf(currentAccent) + 1;
+    if (nextIndex >= accentColors.length) nextIndex = 0;
+    const nextColor = accentColors[nextIndex];
+    
+    localStorage.setItem('accent_color', nextColor);
+    document.documentElement.style.setProperty('--accent', nextColor);
+    document.documentElement.style.setProperty('--accent-glow', nextColor + '26');
+    return `Theme accent color toggled to: ${nextColor}`;
+  };
+
   const commands = {
     help: commandsHelpText,
 
-    whoami: `${ownerName} | Software Engineer
-Location : ${location}
-Focus    : ${(Array.isArray(dossierData.specialization) ? dossierData.specialization : [dossierData.specialization]).join(', ')}
-About    : ${about}`,
+    whoami: `${ownerName} | Final Year CSE Student at PES University. Research Intern at CoDMAV.`,
 
     skills: compileSkillsText(),
-
-    exp: `Experience & Leadership Highlights:
-• Current Mission: ${dossierData.currentMission}
-• Projects: ${dossierData.stats?.projects || '15+'}
-• Leadership Roles: ${dossierData.stats?.leadershipRoles || '3'}
-• Hackathons Completed: ${dossierData.stats?.hackathons || '8'}
-• Research Projects: ${dossierData.stats?.researchProjects || '2'}`,
 
     edu: `Academic Background:
     Degree    : ${dossierData.education}
@@ -152,27 +210,65 @@ About    : ${about}`,
 
     pwd: `/workspace/nh44-cave`,
 
-    ls: `drwxr-xr-x  Overview/      -> Home.jsx
-drwxr-xr-x  Timeline/      -> Journey.md
-drwxr-xr-x  Archive/       -> Projects.json
-drwxr-xr-x  Literature/    -> Blog.md & Publications.json
-drwxr-xr-x  Credentials/   -> Resume.pdf & Certificates.json`,
+    ls: `drwxr-xr-x  projects/
+drwxr-xr-x  journey/
+drwxr-xr-x  contact/
+drwxr-xr-x  literature/
+drwxr-xr-x  credentials/`,
 
     tree: `nh44-cave/
-├── Overview/
-│   └── Home.jsx
-├── Timeline/
-│   └── Journey.md
-├── Archive/
-│   └── Projects.json
-├── Literature/
-│   ├── Blog.md
-│   └── Publications.json
-├── Credentials/
-│   ├── Resume.pdf
-│   └── Certificates.json
-└── Terminal/
-    └── Contact.sh`
+├── projects/
+├── journey/
+├── contact/
+├── literature/
+│   ├── blog/
+│   └── publications/
+└── credentials/
+    ├── resume/
+    └── certifications/`,
+
+    achievements: `Verified Achievements & Publications:
+🏆 1st Place - Heal-O-Code Hackathon (2024)
+🛡️ Finalist - Web3 & Cryptography Build-a-Thon (2024)
+📄 IEEE INDICON 2025 Author: "Medicinal Leaf XAI Classifier"
+   - Abstract: A multimodal Explainable AI framework utilizing Vision Transformers (BEiT) and Grad-CAM/LIME heatmaps to classify medicinal leaves.`,
+
+    paper: `IEEE Research Publication:
+Title    : Medicinal Leaf XAI Classifier (IEEE INDICON 2025)
+DOI      : 10.1109/INDICON60803.2025.10998822
+Abstract : A multimodal Explainable AI framework utilizing Vision Transformers (BEiT) and Grad-CAM/LIME heatmaps to classify medicinal leaves with high explainability and accuracy.
+Link     : https://ieeexplore.ieee.org`,
+
+    batman: `
+    /\\                 /\\
+   /  \\__  _________  __/  \\
+   \\    \\_/         \\_/    /
+    \\                 /
+     \\___/^\\___/^\\___/
+
+"It's not who I am underneath, but what I do that defines me."`,
+
+    coffee: `
+    (  )   (   )
+     ) (    ) (
+    _______  _
+   |       |(_)
+   |       |/
+   |_______|
+   [_______]
+
+Fueled by 3 cups today. Ready to build.`,
+
+    konami: `
+    _  _____  _   _    _    __  __ ___ 
+   | |/ / _ \\| \\ | |  / \\  |  \\/  |_ _|
+   | ' / | | |  \\| | / _ \\ | |\\/| | | | 
+   | . \\ |_| | |\\  |/ ___ \\| |  | | | | 
+   |_|\\_\\___/|_| \\_/_/   \\_\\_|  |_|___|
+   
+[CHEAT ENABLED] Uptime bypassed. Admin protocols active.`,
+
+    "about --terminal": "This terminal interface was vibecoded at 3:00 AM by Antigravity under the influence of dark roast coffee and synthwave playlists. Zero compilers were harmed in the making of this shell."
   };
 
   const handleCommand = (e) => {
@@ -185,68 +281,180 @@ drwxr-xr-x  Credentials/   -> Resume.pdf & Certificates.json`,
       setCmdHistory((prev) => [...prev, input]);
       setHistoryPointer(-1);
 
-      // Routing navigation commands
+      // GAME MODE routing
+      if (terminalMode === 'game') {
+        if (lowerTrimmed === 'exit' || lowerTrimmed === 'quit' || lowerTrimmed === 'pause') {
+          gameEngine.reset();
+          setTerminalMode('normal');
+          newHistory.push({ type: 'system', text: 'Exited WAYNE_SEC. Type "help" for commands.' });
+          setHistory(newHistory);
+        } else {
+          const result = gameEngine.choose(trimmed);
+          newHistory.push({ type: 'output', text: result.text });
+          if (result.done) {
+            setTerminalMode('normal');
+            gameEngine.reset();
+          }
+          setHistory(newHistory);
+        }
+        setInput('');
+        return;
+      }
+
+      // Normal Mode router
+      const parts = trimmed.split(/\s+/);
+      const cmd = parts[0].toLowerCase();
+      const arg1 = parts[1] ? parts[1].toLowerCase() : '';
+      const arg2 = parts[2] ? parts[2].toLowerCase() : '';
+
       if (lowerTrimmed === 'clear') {
         setHistory([]);
         setInput('');
         return;
-      } else if (lowerTrimmed === 'publications') {
-        newHistory.push({ type: 'system', text: 'Opening scientific publications...' });
+      } else if (lowerTrimmed === 'play' || lowerTrimmed === 'game') {
+        gameEngine.start();
+        setTerminalMode('game');
+        newHistory.push({ type: 'output', text: gameEngine.currentText() });
         setHistory(newHistory);
-        setTimeout(() => { navigate('/publications'); onClose(); }, 400);
-      } else if (lowerTrimmed === 'journey') {
-        newHistory.push({ type: 'system', text: 'Opening career timeline...' });
-        setHistory(newHistory);
-        setTimeout(() => { navigate('/journey'); onClose(); }, 400);
-      } else if (lowerTrimmed === 'blog') {
-        newHistory.push({ type: 'system', text: 'Opening engineering blog...' });
-        setHistory(newHistory);
-        setTimeout(() => { navigate('/blog'); onClose(); }, 400);
-      } else if (lowerTrimmed === 'resume') {
-        newHistory.push({ type: 'system', text: 'Opening resume viewer...' });
-        setHistory(newHistory);
-        setTimeout(() => { navigate('/resume'); onClose(); }, 400);
-      } else if (lowerTrimmed === 'contact') {
-        newHistory.push({
-          type: 'output',
-          text: `Contact Info:\nEmail: ${email}\nLocation: ${location}\nNavigating to contact page...`
-        });
-        setHistory(newHistory);
-        setTimeout(() => { navigate('/contact'); onClose(); }, 600);
-      } else if (lowerTrimmed === 'projects' || lowerTrimmed === 'get projects') {
-        const text = projectsList.length > 0
-          ? `Available Projects:\n${projectsList.map((p, idx) => `  ${idx + 1}. [id: ${p.slug || p.id}] ${p.title}`).join('\n')}\n\nType "open <id>" or "open <number>" to view details.`
-          : 'No projects found in workspace.';
+        setInput('');
+        return;
+      } else if (lowerTrimmed === 'history') {
+        const text = cmdHistory.length > 0
+          ? cmdHistory.map((c, i) => `  ${i + 1}  ${c}`).join('\n')
+          : 'No command history.';
         newHistory.push({ type: 'output', text });
         setHistory(newHistory);
-      } else if (lowerTrimmed.startsWith('open ') || lowerTrimmed.startsWith('cd ')) {
-        const spaceIdx = lowerTrimmed.indexOf(' ');
-        const arg = lowerTrimmed.substring(spaceIdx + 1).trim();
-        let targetProj = null;
-
-        // Try numeric index first
-        const numIdx = parseInt(arg, 10) - 1;
-        if (!isNaN(numIdx) && numIdx >= 0 && numIdx < projectsList.length) {
-          targetProj = projectsList[numIdx];
-        } else {
-          // Try matching ID/slug
-          targetProj = projectsList.find(p => (p.slug || p.id).toLowerCase() === arg.toLowerCase());
-        }
-
-        if (targetProj) {
-          newHistory.push({ type: 'system', text: `Opening project: ${targetProj.title}...` });
+      } else if (cmd === 'sudo') {
+        newHistory.push({ type: 'error', text: 'Nice try. Permission denied.' });
+        setHistory(newHistory);
+      } else if (cmd === 'matrix') {
+        newHistory.push({ type: 'matrix' });
+        setHistory(newHistory);
+      } else if (cmd === 'contact') {
+        newHistory.push({ type: 'contact' });
+        setHistory(newHistory);
+      } else if (cmd === 'theme' && arg1 === '--toggle') {
+        const msg = toggleThemeColor();
+        newHistory.push({ type: 'system', text: msg });
+        setHistory(newHistory);
+      } else if (cmd === 'about' && arg1 === '--terminal') {
+        newHistory.push({ type: 'output', text: commands['about --terminal'] });
+        setHistory(newHistory);
+      } else if (cmd === 'resume') {
+        if (arg1 === '--download') {
+          newHistory.push({ type: 'system', text: 'Downloading resume PDF...' });
           setHistory(newHistory);
-          setTimeout(() => {
-            navigate(`/projects/${targetProj.slug || targetProj.id}`);
-            onClose();
-          }, 500);
+          if (resumeUrl) {
+            window.open(resumeUrl, '_blank');
+          } else {
+            newHistory.push({ type: 'error', text: 'Resume URL not configured.' });
+            setHistory(newHistory);
+          }
         } else {
-          newHistory.push({
-            type: 'error',
-            text: `Project not found for query "${arg}". Type "projects" to view all available IDs & numbers.`
-          });
+          newHistory.push({ type: 'system', text: 'Opening resume viewer...' });
+          setHistory(newHistory);
+          setTimeout(() => { navigate('/resume'); onClose(); }, 500);
+        }
+      } else if (cmd === 'projects') {
+        if (arg1 === '--open' && parts[2]) {
+          const projectSlug = parts[2].toLowerCase();
+          const targetProj = projectsList.find(p => (p.slug || p.id).toLowerCase() === projectSlug);
+          if (targetProj) {
+            newHistory.push({ type: 'system', text: `Opening project: ${targetProj.title}...` });
+            setHistory(newHistory);
+            setTimeout(() => {
+              navigate(`/projects/${targetProj.slug || targetProj.id}`);
+              onClose();
+            }, 500);
+          } else {
+            newHistory.push({ type: 'error', text: `Project "${parts[2]}" not found.` });
+            setHistory(newHistory);
+          }
+        } else {
+          const text = projectsList.length > 0
+            ? `Available Projects:\n${projectsList.map((p) => `  - ${p.slug || p.id} : ${p.title}`).join('\n')}\n\nType "projects --open <slug>" or "cd projects/<slug>" to inspect.`
+            : 'No projects found in workspace.';
+          newHistory.push({ type: 'output', text });
           setHistory(newHistory);
         }
+      } else if (cmd === 'cd') {
+        if (!arg1) {
+          newHistory.push({ type: 'system', text: 'Navigating to overview...' });
+          setHistory(newHistory);
+          setTimeout(() => { navigate('/'); onClose(); }, 400);
+        } else if (arg1 === 'projects') {
+          newHistory.push({ type: 'system', text: 'Navigating to projects registry...' });
+          setHistory(newHistory);
+          setTimeout(() => { navigate('/projects'); onClose(); }, 400);
+        } else if (arg1.startsWith('projects/')) {
+          const projectSlug = arg1.substring(9).trim();
+          const targetProj = projectsList.find(p => (p.slug || p.id).toLowerCase() === projectSlug);
+          if (targetProj) {
+            newHistory.push({ type: 'system', text: `Navigating to project: ${targetProj.title}...` });
+            setHistory(newHistory);
+            setTimeout(() => {
+              navigate(`/projects/${targetProj.slug || targetProj.id}`);
+              onClose();
+            }, 500);
+          } else {
+            newHistory.push({ type: 'error', text: `Directory projects/${projectSlug} not found.` });
+            setHistory(newHistory);
+          }
+        } else if (arg1 === 'journey') {
+          newHistory.push({ type: 'system', text: 'Opening career timeline...' });
+          setHistory(newHistory);
+          setTimeout(() => { navigate('/journey'); onClose(); }, 400);
+        } else if (arg1 === 'contact') {
+          newHistory.push({ type: 'system', text: 'Opening contact page...' });
+          setHistory(newHistory);
+          setTimeout(() => { navigate('/contact'); onClose(); }, 400);
+        } else if (arg1 === 'literature') {
+          newHistory.push({ type: 'system', text: 'Opening Literature/Publications list...' });
+          setHistory(newHistory);
+          setTimeout(() => { navigate('/publications'); onClose(); }, 400);
+        } else if (arg1 === 'credentials') {
+          newHistory.push({ type: 'system', text: 'Opening credentials/resume...' });
+          setHistory(newHistory);
+          setTimeout(() => { navigate('/resume'); onClose(); }, 400);
+        } else {
+          newHistory.push({ type: 'error', text: `Directory not found: "${arg1}"` });
+          setHistory(newHistory);
+        }
+      } else if (cmd === 'open') {
+        if (arg1 === 'github') {
+          newHistory.push({ type: 'system', text: 'Opening GitHub profile in a new tab...' });
+          setHistory(newHistory);
+          const githubLink = settings?.social_links?.github || 'https://github.com/nh-44';
+          window.open(githubLink, '_blank');
+        } else if (arg1 === 'linkedin') {
+          newHistory.push({ type: 'system', text: 'Opening LinkedIn profile in a new tab...' });
+          setHistory(newHistory);
+          const linkedinLink = settings?.social_links?.linkedin || 'https://linkedin.com';
+          window.open(linkedinLink, '_blank');
+        } else if (arg1.startsWith('projects/') || projectsList.some(p => (p.slug || p.id).toLowerCase() === arg1)) {
+          const slug = arg1.startsWith('projects/') ? arg1.substring(9).trim() : arg1;
+          const targetProj = projectsList.find(p => (p.slug || p.id).toLowerCase() === slug);
+          if (targetProj) {
+            newHistory.push({ type: 'system', text: `Opening project: ${targetProj.title}...` });
+            setHistory(newHistory);
+            setTimeout(() => {
+              navigate(`/projects/${targetProj.slug || targetProj.id}`);
+              onClose();
+            }, 500);
+          } else {
+            newHistory.push({ type: 'error', text: `Project "${slug}" not found.` });
+            setHistory(newHistory);
+          }
+        } else {
+          newHistory.push({ type: 'error', text: 'Usage: open <github|linkedin|projects/slug>' });
+          setHistory(newHistory);
+        }
+      } else if (lowerTrimmed === 'journey') {
+        newHistory.push({ 
+          type: 'output', 
+          text: `Career Timeline & Milestones:\n• 2020 - 2023 : High School & Secondary Education (First Class Honors)\n• 2023 - 2027 : PES University - B.Tech in Computer Science & Engineering\n• 2024 - Pres : Research Intern at CoDMAV (Vision Transformers & Multimodal XAI)\n• 2024 - Pres : Hackathons (1st Place Heal-O-Code, Build-a-Thon finalist)` 
+        });
+        setHistory(newHistory);
       } else if (commands[lowerTrimmed]) {
         newHistory.push({ type: 'output', text: commands[lowerTrimmed] });
         setHistory(newHistory);
@@ -281,6 +489,11 @@ drwxr-xr-x  Credentials/   -> Resume.pdf & Certificates.json`,
 
   if (!isOpen) return null;
 
+  const getPlaceholder = () => {
+    if (terminalMode === 'game') return 'choose option [1/2/A/B/C/exit]:';
+    return 'type a command...';
+  };
+
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10">
@@ -311,7 +524,7 @@ drwxr-xr-x  Credentials/   -> Resume.pdf & Certificates.json`,
               </div>
               <span className="ml-3 text-[10px] text-slate-500 font-mono flex items-center gap-1.5">
                 <Terminal className="w-3.5 h-3.5 text-accent" />
-                {ownerName.toLowerCase()}-hq ~ bash
+                {ownerName.toLowerCase().replace(/\s+/g, '')}-hq ~ bash
               </span>
             </div>
             <button
@@ -324,7 +537,7 @@ drwxr-xr-x  Credentials/   -> Resume.pdf & Certificates.json`,
 
           {/* Terminal History Container */}
           <div
-            className="flex-1 p-5 overflow-y-auto space-y-3 cursor-text text-slate-300 selection:bg-accent/40 selection:text-white"
+            className="flex-1 p-5 overflow-y-auto space-y-3 cursor-text text-slate-300 selection:bg-accent/40 selection:text-white scrollbar-thin"
             onClick={() => inputRef.current?.focus()}
             data-lenis-prevent
           >
@@ -342,6 +555,20 @@ drwxr-xr-x  Credentials/   -> Resume.pdf & Certificates.json`,
                 {item.type === 'error' && (
                   <div className="text-rose-400 font-mono text-[11px]">{item.text}</div>
                 )}
+                {item.type === 'matrix' && (
+                  <div className="py-2">
+                    <MatrixRain />
+                    <div className="text-[10px] text-emerald-500 font-mono mt-1">Decryption matrix initialized. Safe link established.</div>
+                  </div>
+                )}
+                {item.type === 'contact' && (
+                  <div className="space-y-1.5 text-xs font-mono text-slate-300 py-1 bg-slate-900/40 p-3 rounded-lg border border-white/5">
+                    <div className="text-slate-400 uppercase tracking-widest text-[9px] mb-1 font-bold">HQ Contact Directory</div>
+                    <div>Email    : <a href={`mailto:${email}`} className="text-accent hover:underline">{email}</a></div>
+                    <div>GitHub   : <a href={settings?.social_links?.github || "https://github.com/nh-44"} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">{settings?.social_links?.github || "github.com/nh-44"}</a></div>
+                    <div>LinkedIn : <a href={settings?.social_links?.linkedin || "https://linkedin.com"} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">{settings?.social_links?.linkedin || "linkedin.com"}</a></div>
+                  </div>
+                )}
               </div>
             ))}
 
@@ -357,7 +584,7 @@ drwxr-xr-x  Credentials/   -> Resume.pdf & Certificates.json`,
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleCommand}
                 className="flex-1 bg-transparent border-none outline-none text-slate-100 font-mono text-xs focus:ring-0 p-0"
-                placeholder="type a command..."
+                placeholder={getPlaceholder()}
                 autoFocus
               />
             </div>
