@@ -195,8 +195,9 @@ const downloadFromCloudinary = async (url) => {
 
 
 // GET /api/media/view - proxies PDF inline (for iframe embedding, no download header)
-router.get('/view', async (req, res) => {
+router.get(['/view', '/view/:filename'], async (req, res) => {
   const { url } = req.query;
+  const filename = req.params.filename || 'Naveen_S_Resume.pdf';
   if (!url) {
     return res.status(400).json({ error: 'url parameter is required' });
   }
@@ -208,7 +209,7 @@ router.get('/view', async (req, res) => {
     }
 
     res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'inline');
+    res.setHeader('Content-Disposition', `inline; filename="${filename}"`);
     res.setHeader('Cache-Control', 'private, max-age=3600');
     res.removeHeader('X-Content-Type-Options');
 

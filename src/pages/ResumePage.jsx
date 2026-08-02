@@ -10,7 +10,7 @@ export default function ResumePage({ resumeUrl }) {
   // This bypasses CORS/content-type issues with raw Cloudinary URLs
   const getViewerUrl = (url) => {
     if (!url) return '';
-    return `/api/media/view?url=${encodeURIComponent(url)}`;
+    return `/api/media/view/Naveen_S_Resume.pdf?url=${encodeURIComponent(url)}`;
   };
 
   // Backend proxy download — guarantees correct filename + extension
